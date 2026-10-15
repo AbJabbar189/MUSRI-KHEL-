@@ -1,12 +1,30 @@
 // Misri Khel Qaumi Ittehad - App Interactions
 document.addEventListener("DOMContentLoaded", () => {
-    // Mobile navigation toggle
+    // Mobile navigation toggle with backdrop/close on click outside
     const toggleBtn = document.querySelector(".mobile-toggle");
     const navMenu = document.querySelector(".nav-menu");
     
     if (toggleBtn && navMenu) {
-        toggleBtn.addEventListener("click", () => {
+        toggleBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle("show");
+            toggleBtn.innerHTML = navMenu.classList.contains("show") ? "✕" : "☰";
+        });
+
+        // Auto close when tapping any link
+        navMenu.querySelectorAll(".nav-link").forEach(link => {
+            link.addEventListener("click", () => {
+                navMenu.classList.remove("show");
+                toggleBtn.innerHTML = "☰";
+            });
+        });
+
+        // Close when tapping outside
+        document.addEventListener("click", (e) => {
+            if (!navMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+                navMenu.classList.remove("show");
+                toggleBtn.innerHTML = "☰";
+            }
         });
     }
 

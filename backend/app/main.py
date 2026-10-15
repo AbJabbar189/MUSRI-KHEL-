@@ -41,11 +41,16 @@ app.include_router(api_router)
 # Mount backend static files (cards, qr codes, logos, downloads)
 app.mount("/static", StaticFiles(directory=settings.STATIC_DIR), name="static")
 
-# Mount frontend public files
-frontend_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "frontend"))
+# Mount web files (supports both root directory and legacy frontend directory)
+root_workspace_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".."))
+frontend_dir = os.path.join(root_workspace_dir, "frontend")
+
 if os.path.exists(frontend_dir):
     app.mount("/frontend", StaticFiles(directory=frontend_dir, html=True), name="frontend")
     public_dir = os.path.join(frontend_dir, "public")
     if os.path.exists(public_dir):
         app.mount("/public", StaticFiles(directory=public_dir, html=True), name="public_explicit")
         app.mount("/", StaticFiles(directory=public_dir, html=True), name="public")
+else:
+    # Files are placed directly in project root
+    app.mount("/", StaticFiles(directory=root_workspace_dir, html=True), name="root_site")
