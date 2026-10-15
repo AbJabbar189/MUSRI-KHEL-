@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڈیجیٹل کارڈ تصدیقی پورٹل | مصری خیل قومی اتحاد</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="stylesheet" href="/frontend/src/css/style.css">
+    <link rel="stylesheet" href="/frontend/src/css/rtl.css">
+    <style>
+        .verification-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--secondary);
+            text-align: center;
+        }
+        .verified-badge {
+            width: 80px;
+            height: 80px;
+            background: #0D472B;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 25px rgba(13, 71, 43, 0.3);
+            border: 3px solid var(--secondary);
+        }
+        .invalid-badge {
+            width: 80px;
+            height: 80px;
+            background: #DC2626;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            margin: 0 auto 20px;
+        }
+        .verification-details {
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            text-align: right;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+            font-size: 15px;
+        }
+        .detail-row span:first-child {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .detail-row span:last-child {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="lang-ur">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-contact">
+                <span>سرکاری ڈیجیٹل کارڈ ویری فکیشن سسٹم | مصری خیل قومی اتحاد</span>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="ur">اردو</button>
+                <button class="lang-btn" data-lang="ps">پښتو</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="brand-wrapper">
+                <a href="/index.html"><img src="/images/logo.jpg" alt="Logo" class="brand-logo"></a>
+                <div class="brand-titles">
+                    <span class="brand-name" data-i18n="org_name">مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                    <span class="brand-motto" data-i18n="motto">اتحاد • خدمت • عزت • ترقی</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">صفحہ اول</a></li>
+                    <li><a href="/membership.html" class="nav-link" data-i18n="nav_membership">ممبرشپ پورٹل</a></li>
+                    <li><a href="/verify.html" class="nav-link active" data-i18n="nav_verify">کارڈ تصدیق</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav_contact">رابطہ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="verification-container" id="verify-box">
+            <img src="/images/logo.jpg" alt="Official Logo" style="width: 75px; height: 75px; margin: 0 auto 15px; border-radius: 50%; border: 2px solid var(--secondary);">
+            <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 5px;">مصری خیل قومی اتحاد فاؤنڈیشن</h2>
+            <p style="color: var(--secondary-dark); font-weight: 600; font-size: 14px; margin-bottom: 25px;">آن لائن کارڈ ویری فکیشن و چیکر</p>
+
+            <!-- Manual input if no token in query param -->
+            <div id="manual-input" style="margin-bottom: 25px;">
+                <label class="form-label">تصدیقی ٹوکن یا کارڈ کیو آر کوڈ درج کریں:</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" class="form-control" id="token-input" placeholder="Enter Token ID (e.g. a089f9fa...)">
+                    <button class="btn btn-primary" onclick="runVerification()">چیک کریں</button>
+                </div>
+            </div>
+
+            <!-- Result Card -->
+            <div id="result-area" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer" style="margin-top: 60px;">
+        <div class="container footer-bottom" style="border: none; padding-top: 0;">
+            <span data-i18n="copyright">© 2026 مصری خیل قومی اتحاد فاؤنڈیشن۔ جملہ حقوق محفوظ ہیں۔</span>
+            <span>QR Secure Verification Engine</span>
+        </div>
+    </footer>
+
+    <script src="/frontend/src/js/i18n.js"></script>
+    <script src="/frontend/src/js/api.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenParam = urlParams.get('token');
+
+        if (tokenParam) {
+            document.getElementById('token-input').value = tokenParam;
+            document.getElementById('manual-input').style.display = 'none';
+            verifyToken(tokenParam);
+        }
+
+        function runVerification() {
+            const token = document.getElementById('token-input').value.trim();
+            if (token) {
+                verifyToken(token);
+            }
+        }
+
+        async function verifyToken(token) {
+            const resultArea = document.getElementById('result-area');
+            resultArea.style.display = 'block';
+            resultArea.innerHTML = "<p>تصدیق کی جا رہی ہے...</p>";
+
+            try {
+                const res = await api.verifyCard(token);
+                if (res.is_valid) {
+                    resultArea.innerHTML = `
+                        <div class="verified-badge">✓</div>
+                        <h3 style="color: #0D472B; font-size: 22px; font-weight: 700;">تصدیق شدہ باقاعدہ ممبر</h3>
+                        <p style="color: var(--secondary-dark); font-weight: 600;">Verified Active Membership</p>
+
+                        <div class="verification-details">
+                            <div class="detail-row">
+                                <span>تنظیم کا نام:</span>
+                                <span>${res.organization}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>ممبرشپ نمبر:</span>
+                                <span>${res.membership_id}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>ممبر کا نام:</span>
+                                <span>${res.member_name_ur} (${res.member_name_en})</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>کارڈ کی صورتحال:</span>
+                                <span style="color: #0D472B;">فعال (ACTIVE)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>تاریخ اجراء:</span>
+                                <span>${res.issue_date}</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 25px; padding: 12px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; font-size: 13px; color: #166534;">
+                            🔒 یہ کارڈ مصری خیل قومی اتحاد کے مرکزی ڈیٹا بیس سے مصدقہ ہے۔ رازداری کے ضابطہ کے تحت حساس معلومات محفوظ ہیں۔
+                        </div>
+                    `;
+                } else {
+                    resultArea.innerHTML = `
+                        <div class="invalid-badge">✕</div>
+                        <h3 style="color: #DC2626; font-size: 22px;">غیر فعال یا معطل کارڈ</h3>
+                        <p style="color: var(--text-muted);">یہ کارڈ فی الوقت معطل یا منسوخ ہے۔ براہ کرم مرکزی دفتر سے رابطہ کریں۔</p>
+                    `;
+                }
+            } catch (err) {
+                resultArea.innerHTML = `
+                    <div class="invalid-badge">✕</div>
+                    <h3 style="color: #DC2626; font-size: 20px;">تصدیق ناکام</h3>
+                    <p style="color: var(--text-muted);">${err.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

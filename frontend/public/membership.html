@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آن لائن ممبرشپ رجسٹریشن | مصری خیل قومی اتحاد</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="stylesheet" href="/frontend/src/css/style.css">
+    <link rel="stylesheet" href="/frontend/src/css/rtl.css">
+    <style>
+        .tabs-header {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .tab-btn {
+            padding: 12px 28px;
+            border-radius: 30px;
+            background: #E2E8F0;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+        .status-box {
+            display: none;
+            background: #F8FAFC;
+            border: 2px dashed var(--primary);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            margin-top: 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="lang-ur">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-contact">
+                <div class="top-bar-contact-item">
+                    <span>info@misrikhel.org | 021-32768327</span>
+                </div>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="ur">اردو</button>
+                <button class="lang-btn" data-lang="ps">پښتو</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="brand-wrapper">
+                <a href="/index.html"><img src="/images/logo.jpg" alt="Logo" class="brand-logo"></a>
+                <div class="brand-titles">
+                    <span class="brand-name" data-i18n="org_name">مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                    <span class="brand-motto" data-i18n="motto">اتحاد • خدمت • عزت • ترقی</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">صفحہ اول</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav_about">ہمارے متعلق</a></li>
+                    <li><a href="/history.html" class="nav-link" data-i18n="nav_history">برادری تاریخ</a></li>
+                    <li><a href="/leadership.html" class="nav-link" data-i18n="nav_leadership">قیادت و کمیٹیاں</a></li>
+                    <li><a href="/professionals.html" class="nav-link" data-i18n="nav_professionals">علماء و پروفیشنلز</a></li>
+                    <li><a href="/membership.html" class="nav-link active" data-i18n="nav_membership">ممبرشپ پورٹل</a></li>
+                    <li><a href="/verify.html" class="nav-link" data-i18n="nav_verify">کارڈ تصدیق</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav_contact">رابطہ</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="/admin.html" class="btn btn-outline" style="padding: 9px 15px; font-size: 13px;" data-i18n="nav_admin">انتظامی لاگ ان</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section style="background: linear-gradient(135deg, #072718 0%, #0D472B 100%); color: #fff; padding: 45px 0; text-align: center; border-bottom: 3px solid var(--secondary);">
+        <div class="container">
+            <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">آن لائن ممبرشپ رجسٹریشن و صورتحال</h1>
+            <p style="color: var(--secondary); font-size: 16px;">باوقار مصری خیل برادری کا حصہ بنیں اور سرکاری ڈیجیٹل کارڈ حاصل کریں</p>
+        </div>
+    </section>
+
+    <!-- Tabs Container -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="tabs-header">
+                <button class="tab-btn active" id="tab-apply-btn" onclick="switchTab('apply')">نئی ممبرشپ فارم</button>
+                <button class="tab-btn" id="tab-status-btn" onclick="switchTab('status')">درخواست کی صورتحال دیکھیں</button>
+            </div>
+
+            <!-- TAB 1: Registration Form -->
+            <div id="tab-apply" class="form-card">
+                <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 25px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
+                    📝 ممبرشپ درخواست فارم
+                </h2>
+
+                <form id="membership-form" onsubmit="handleApply(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">مکمل نام (اردو میں) *</label>
+                            <input type="text" class="form-control" id="full_name_ur" placeholder="مثال: محمد عمران خان" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Full Name (English) *</label>
+                            <input type="text" class="form-control" id="full_name_en" placeholder="e.g. Muhammad Imran Khan" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">والد کا نام (اردو)</label>
+                            <input type="text" class="form-control" id="father_name_ur" placeholder="مثال: حاجی گل زمان خان">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Father's Name (English)</label>
+                            <input type="text" class="form-control" id="father_name_en" placeholder="e.g. Haji Gul Zaman Khan">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">موبائل نمبر (WhatsApp) *</label>
+                            <input type="tel" class="form-control" id="mobile_number" placeholder="03001234567" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ای میل ایڈریس (اختیاری)</label>
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">موجودہ رہائشی شہر *</label>
+                            <select class="form-control" id="current_city" required>
+                                <option value="Karachi">کراچی (Karachi)</option>
+                                <option value="Rawalpindi">راولپنڈی (Rawalpindi)</option>
+                                <option value="Islamabad">اسلام آباد (Islamabad)</option>
+                                <option value="Peshawar">پشاور (Peshawar)</option>
+                                <option value="Shangla">شانگلہ (Shangla)</option>
+                                <option value="Torghar">تورغر (Torghar)</option>
+                                <option value="Buner">بونیر (Buner)</option>
+                                <option value="Other">دیگر (Other)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">موجودہ علاقہ / ٹاؤن *</label>
+                            <input type="text" class="form-control" id="current_area" placeholder="مثال: اتحاد ٹاؤن / قصبہ کالونی / منگھوپیر" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">آبائی ضلع / ریجن *</label>
+                            <select class="form-control" id="ancestral_region" required>
+                                <option value="Shangla">شانگلہ (Shangla)</option>
+                                <option value="Torghar">تورغر (Torghar)</option>
+                                <option value="Buner">بونیر (Buner)</option>
+                                <option value="Swat">سوات (Swat)</option>
+                                <option value="Other">دیگر علاقہ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">آبائی گاؤں / گاؤں کا نام</label>
+                            <input type="text" class="form-control" id="ancestral_village" placeholder="مثال: الپوری / پورن / کنڈر">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">پیشہ / شعبہ (Occupation)</label>
+                            <input type="text" class="form-control" id="occupation" placeholder="مثال: ٹیچر، بزنس مین، ڈرائیور، انجینئر">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">پیشہ ورانہ زمرہ (Professional Category)</label>
+                            <select class="form-control" id="professional_category">
+                                <option value="General">عام برادری ممبر</option>
+                                <option value="Religious Scholar">عالم دین / مفتی / قاری</option>
+                                <option value="Doctor">ڈاکٹر / ہیلتھ کیئر</option>
+                                <option value="Engineer">انجینئر</option>
+                                <option value="Teacher">استاد / معلم</option>
+                                <option value="Lawyer">وکیل / ایڈووکیٹ</option>
+                                <option value="IT">سافٹ ویئر / آئی ٹی ماہر</option>
+                                <option value="Business">تاجر / دکاندار</option>
+                                <option value="Student">طالب علم (Student)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 14px;">
+                            <input type="checkbox" id="declaration_accepted" checked required style="margin-top: 4px;">
+                            <span>میں اقرار کرتا ہوں کہ مندرجہ بالا تمام معلومات درست ہیں اور میں مصری خیل قومی اتحاد کے دستور و اخلاقی ضوابط کی پاسداری کروں گا۔</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <button type="submit" id="submit-btn" class="btn btn-gold" style="width: 100%; padding: 14px; font-size: 16px;">
+                            درخواست جمع کروائیں (Submit Application)
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TAB 2: Check Status -->
+            <div id="tab-status" class="form-card" style="display: none;">
+                <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 25px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
+                    🔍 درخواست یا ممبرشپ کی تصدیق
+                </h2>
+                <div class="form-group">
+                    <label class="form-label">درخواست نمبر، ممبرشپ نمبر، یا موبائل نمبر درج کریں:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" class="form-control" id="search-id" placeholder="مثال: APP-2026-0001 یا 03001234567">
+                        <button class="btn btn-primary" onclick="handleCheckStatus()" style="white-space: nowrap;">تلاش کریں</button>
+                    </div>
+                </div>
+
+                <div id="status-result" class="status-box">
+                    <div id="status-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-bottom" style="border: none; padding-top: 0;">
+            <span data-i18n="copyright">© 2026 مصری خیل قومی اتحاد فاؤنڈیشن۔ جملہ حقوق محفوظ ہیں۔</span>
+            <span>021-32768327 | info@misrikhel.org</span>
+        </div>
+    </footer>
+
+    <script src="/frontend/src/js/i18n.js"></script>
+    <script src="/frontend/src/js/api.js"></script>
+    <script src="/frontend/src/js/app.js"></script>
+    <script>
+        function switchTab(tab) {
+            if (tab === 'apply') {
+                document.getElementById('tab-apply').style.display = 'block';
+                document.getElementById('tab-status').style.display = 'none';
+                document.getElementById('tab-apply-btn').classList.add('active');
+                document.getElementById('tab-status-btn').classList.remove('active');
+            } else {
+                document.getElementById('tab-apply').style.display = 'none';
+                document.getElementById('tab-status').style.display = 'block';
+                document.getElementById('tab-apply-btn').classList.remove('active');
+                document.getElementById('tab-status-btn').classList.add('active');
+            }
+        }
+
+        if (window.location.hash === '#track-status') {
+            switchTab('status');
+        }
+
+        async function handleApply(e) {
+            e.preventDefault();
+            const btn = document.getElementById("submit-btn");
+            btn.disabled = true;
+            btn.textContent = "براہ کرم انتظار کیجیے...";
+
+            const payload = {
+                full_name_ur: document.getElementById("full_name_ur").value.trim(),
+                full_name_en: document.getElementById("full_name_en").value.trim(),
+                father_name_ur: document.getElementById("father_name_ur").value.trim(),
+                father_name_en: document.getElementById("father_name_en").value.trim(),
+                mobile_number: document.getElementById("mobile_number").value.trim(),
+                email: document.getElementById("email").value.trim() || null,
+                current_city: document.getElementById("current_city").value,
+                current_area: document.getElementById("current_area").value.trim(),
+                ancestral_region: document.getElementById("ancestral_region").value,
+                ancestral_village: document.getElementById("ancestral_village").value.trim() || null,
+                occupation: document.getElementById("occupation").value.trim() || null,
+                professional_category: document.getElementById("professional_category").value,
+                declaration_accepted: document.getElementById("declaration_accepted").checked
+            };
+
+            try {
+                const res = await api.applyMembership(payload);
+                showToast(`درخواست کامیابی سے موصول ہوئی! آپ کا درخواست نمبر: ${res.application_number}`);
+                document.getElementById("membership-form").reset();
+                switchTab('status');
+                document.getElementById("search-id").value = res.application_number;
+                handleCheckStatus();
+            } catch (err) {
+                showToast(err.message, "error");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "درخواست جمع کروائیں (Submit Application)";
+            }
+        }
+
+        async function handleCheckStatus() {
+            const id = document.getElementById("search-id").value.trim();
+            if (!id) {
+                showToast("براہ کرم نمبر درج کریں", "error");
+                return;
+            }
+
+            const box = document.getElementById("status-result");
+            const content = document.getElementById("status-content");
+            box.style.display = "block";
+            content.innerHTML = "<p>تلاش جاری ہے...</p>";
+
+            try {
+                const res = await api.checkStatus(id);
+                let badgeColor = "#F59E0B";
+                let statusLabel = "زیر جائزہ (Under Review)";
+                if (res.status === "APPROVED") {
+                    badgeColor = "#0D472B";
+                    statusLabel = "منظور شدہ (Approved Member)";
+                } else if (res.status === "REJECTED") {
+                    badgeColor = "#DC2626";
+                    statusLabel = "مسترد (Rejected)";
+                }
+
+                let cardHtml = "";
+                if (res.card && res.card.pdf_path) {
+                    cardHtml = `
+                        <div style="margin-top: 20px; padding: 15px; background: #FFF; border-radius: 8px; border: 1px solid var(--secondary);">
+                            <h4 style="color: var(--primary);">ڈیجیٹل ممبرشپ کارڈ جاری ہو چکا ہے</h4>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">کارڈ نمبر: ${res.card.card_number}</p>
+                            <a href="${res.card.pdf_path}" target="_blank" class="btn btn-gold">
+                                📥 ممبرشپ کارڈ ڈاؤن لوڈ کریں (PDF)
+                            </a>
+                            <a href="/verify.html?token=${res.card.verification_token}" class="btn btn-outline" style="margin-right: 8px;">
+                                تصدیقی صفحہ دیکھیں
+                            </a>
+                        </div>
+                    `;
+                }
+
+                content.innerHTML = `
+                    <div style="display: inline-block; background: ${badgeColor}; color: #fff; padding: 5px 16px; border-radius: 20px; font-weight: 700; margin-bottom: 15px;">
+                        ${statusLabel}
+                    </div>
+                    <h3 style="font-size: 20px; color: var(--primary-dark);">${res.name} (${res.name_en})</h3>
+                    <p style="color: var(--text-muted); margin-top: 6px;">
+                        نمبر: <b>${res.application_number || res.membership_id}</b> | ریجن: <b>${res.ancestral_region}</b> (${res.current_city})
+                    </p>
+                    ${res.review_notes ? `<p style="margin-top: 10px; color: #475569; background: #fff; padding: 10px; border-radius: 6px;"><b>نوٹ:</b> ${res.review_notes}</p>` : ''}
+                    ${cardHtml}
+                `;
+            } catch (err) {
+                content.innerHTML = `<p style="color: #DC2626;">❌ ${err.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

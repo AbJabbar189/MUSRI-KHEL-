@@ -1,0 +1,65 @@
+/* Misri Khel Qaumi Ittehad - RTL / LTR Directional Styles */
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="ltr"] body {
+    direction: ltr;
+    text-align: left;
+}
+
+/* RTL specifics */
+html[dir="rtl"] .top-bar-contact-item svg {
+    margin-left: 6px;
+    margin-right: 0;
+}
+
+html[dir="ltr"] .top-bar-contact-item svg {
+    margin-right: 6px;
+    margin-left: 0;
+}
+
+html[dir="rtl"] .samaj-badge {
+    right: auto;
+    left: 15px;
+}
+
+html[dir="ltr"] .samaj-badge {
+    left: auto;
+    right: 15px;
+}
+
+html[dir="rtl"] .stat-card {
+    border-left: 1px solid var(--border);
+    border-right: none;
+}
+
+html[dir="rtl"] .stat-card:last-child {
+    border-left: none;
+}
+
+html[dir="ltr"] .stat-card {
+    border-right: 1px solid var(--border);
+    border-left: none;
+}
+
+html[dir="ltr"] .stat-card:last-child {
+    border-right: none;
+}
+
+/* Nastaliq Font Line-height fine-tuning */
+.ur-font {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    line-height: 2.1;
+}
+
+.ps-font {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    line-height: 1.9;
+}
+
+.en-font {
+    font-family: 'Urbanist', 'Outfit', sans-serif;
+    line-height: 1.6;
+}

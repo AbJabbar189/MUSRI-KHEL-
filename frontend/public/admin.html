@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیکریٹریٹ کنٹرول پینل | مصری خیل قومی اتحاد فاؤنڈیشن</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="stylesheet" href="/frontend/src/css/style.css">
+    <link rel="stylesheet" href="/frontend/src/css/rtl.css">
+    <style>
+        .admin-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 25px;
+        }
+        .admin-nav-tab {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .admin-nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: rgba(13, 71, 43, 0.04);
+        }
+        .table-responsive {
+            overflow-x: auto;
+            background: #fff;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: right;
+        }
+        .admin-table th {
+            background: #f8faf9;
+            color: var(--primary);
+            font-weight: 700;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border);
+        }
+        .admin-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .admin-table tr:hover {
+            background: #fafdfa;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-pending { background: #fff8e1; color: #b8860b; border: 1px solid #ffe082; }
+        .badge-approved { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+        .badge-rejected { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .stat-card-mini {
+            background: #fff;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-card-mini h4 {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .stat-card-mini .val {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body class="lang-ur">
+
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-contact">
+                <span>مرکزی سیکریٹریٹ ڈیش بورڈ • مصری خیل قومی اتحاد فاؤنڈیشن</span>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="ur">اردو</button>
+                <button class="lang-btn" data-lang="ps">پښتو</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="brand-wrapper">
+                <a href="/index.html"><img src="/images/logo.jpg" alt="Logo" class="brand-logo"></a>
+                <div class="brand-titles">
+                    <span class="brand-name" data-i18n="org_name">مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                    <span class="brand-motto" data-i18n="motto">مرکزی انتظامی و سیکریٹریٹ پورٹل</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/index.html" class="nav-link">صفحہ اول</a></li>
+                    <li><a href="/membership.html" class="nav-link">ممبرشپ پورٹل</a></li>
+                    <li><a href="/verify.html" class="nav-link">کارڈ تصدیق</a></li>
+                    <li><a href="/admin.html" class="nav-link active">سیکریٹریٹ کنٹرول</a></li>
+                </ul>
+            </nav>
+            <div id="authHeaderAction">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="section-padding" style="background: #f7f9f8; min-height: 80vh;">
+        <div class="container">
+
+            <!-- VIEW 1: LOGIN BOX (When not authenticated) -->
+            <div id="loginView" style="display: none; max-width: 450px; margin: 40px auto; background: #fff; padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <img src="/images/logo.jpg" alt="Logo" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 12px; border: 2px solid var(--secondary);">
+                    <h2 style="font-size: 22px; color: var(--primary);">سیکریٹریٹ لاگ ان</h2>
+                    <p style="font-size: 13px; color: var(--text-muted);">مجاز عہدیداران و مرکزی سیکریٹریٹ ایڈمنسٹریشن</p>
+                </div>
+
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">صارف کا نام (Username) *</label>
+                        <input type="text" class="form-control" id="loginUsername" required value="admin">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">پاس ورڈ (Password) *</label>
+                        <input type="password" class="form-control" id="loginPassword" required value="Admin@12345">
+                    </div>
+                    <div id="loginError" style="display: none; color: #c62828; font-size: 13px; margin-bottom: 15px; padding: 8px; background: #ffebee; border-radius: 4px;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px;">
+                        لاگ ان کریں &larr;
+                    </button>
+                    <div style="margin-top: 15px; font-size: 12px; color: var(--text-muted); text-align: center; background: #fdfbf7; padding: 8px; border-radius: 4px;">
+                        سسٹم ٹیسٹ لاگ ان: <b>admin</b> | پاس ورڈ: <b>Admin@12345</b>
+                    </div>
+                </form>
+            </div>
+
+            <!-- VIEW 2: DASHBOARD (When authenticated) -->
+            <div id="dashboardView" style="display: none;">
+                <!-- User Welcome Banner -->
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, #072718 100%); color: #fff; padding: 25px 30px; border-radius: var(--radius-lg); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--secondary);">
+                    <div>
+                        <h2 style="font-size: 24px; margin-bottom: 5px;">خوش آمدید، <span id="adminUserName">منتظم اعلیٰ</span></h2>
+                        <p style="color: var(--secondary); font-size: 14px;">مرکزی سیکریٹریٹ مصری خیل قومی اتحاد فاؤنڈیشن • کردار: <span id="adminUserRole">SUPER_ADMIN</span></p>
+                    </div>
+                    <button onclick="handleLogout()" class="btn btn-outline" style="border-color: #fff; color: #fff;">
+                        لاگ آؤٹ (Logout)
+                    </button>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="grid grid-4" style="margin-bottom: 30px;">
+                    <div class="stat-card-mini">
+                        <h4>کل ممبرشپ درخواستیں</h4>
+                        <div class="val" id="statTotalApps">0</div>
+                    </div>
+                    <div class="stat-card-mini" style="border-top-color: #f59e0b;">
+                        <h4>زیرِ جائزہ درخواستیں</h4>
+                        <div class="val" id="statPendingApps" style="color: #b8860b;">0</div>
+                    </div>
+                    <div class="stat-card-mini" style="border-top-color: #10b981;">
+                        <h4>منظور شدہ اراکین</h4>
+                        <div class="val" id="statApprovedMembers" style="color: #10b981;">0</div>
+                    </div>
+                    <div class="stat-card-mini" style="border-top-color: var(--secondary);">
+                        <h4>خالص مالیاتی فنڈ (PKR)</h4>
+                        <div class="val" id="statNetBalance" style="color: var(--secondary); font-size: 24px;">0</div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="admin-nav-tabs">
+                    <button class="admin-nav-tab active" onclick="switchAdminTab('applications')">درخواستیں برائے ممبرشپ</button>
+                    <button class="admin-nav-tab" onclick="switchAdminTab('approved-members')">منظور شدہ اراکین و کارڈز</button>
+                    <button class="admin-nav-tab" onclick="switchAdminTab('finance')">مالیات و فنڈز لیجر</button>
+                </div>
+
+                <!-- TAB 1: APPLICATIONS INBOX -->
+                <div id="tabApplications">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-sm btn-primary" onclick="loadApplications('ALL')">تمام</button>
+                            <button class="btn btn-sm btn-outline" onclick="loadApplications('PENDING')">زیرِ جائزہ (Pending)</button>
+                            <button class="btn btn-sm btn-outline" onclick="loadApplications('APPROVED')">منظور شدہ</button>
+                            <button class="btn btn-sm btn-outline" onclick="loadApplications('REJECTED')">مسترد شدہ</button>
+                        </div>
+                        <button class="btn btn-sm btn-outline" onclick="loadApplications()">تازہ کریں (Refresh)</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>درخواست نمبر</th>
+                                    <th>نام درخواست گزار</th>
+                                    <th>ولدیت</th>
+                                    <th>موبائل نمبر</th>
+                                    <th>آبائی علاقہ</th>
+                                    <th>موجودہ شہر</th>
+                                    <th>حیثیت</th>
+                                    <th>تاریخ جمع</th>
+                                    <th style="text-align: center;">اقدامات (Actions)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTableBody">
+                                <tr>
+                                    <td colspan="9" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                                        ڈیٹا لوڈ ہو رہا ہے...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 2: APPROVED MEMBERS & CARDS -->
+                <div id="tabApprovedMembers" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ممبرشپ نمبر</th>
+                                    <th>نام رکن</th>
+                                    <th>موبائل نمبر</th>
+                                    <th>آبائی علاقہ</th>
+                                    <th>پیشہ / شعبہ</th>
+                                    <th>حیثیت</th>
+                                    <th style="text-align: center;">ڈیجیٹل کارڈ / ایکشن</th>
+                                </tr>
+                            </thead>
+                            <tbody id="approvedMembersTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                                        ڈیٹا لوڈ ہو رہا ہے...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 3: FINANCE & ACCOUNTS -->
+                <div id="tabFinance" style="display: none;">
+                    <div class="grid grid-3" style="margin-bottom: 25px;">
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: var(--radius-md); border: 1px solid #a5d6a7;">
+                            <h4 style="font-size: 13px; color: #1b5e20;">کل آمدنی و عطیات</h4>
+                            <div id="financeTotalIncome" style="font-size: 24px; font-weight: 800; color: #1b5e20;">PKR 0</div>
+                        </div>
+                        <div style="background: #ffebee; padding: 20px; border-radius: var(--radius-md); border: 1px solid #ef9a9a;">
+                            <h4 style="font-size: 13px; color: #c62828;">کل اخراجات و فلاحی تقسیم</h4>
+                            <div id="financeTotalExpense" style="font-size: 24px; font-weight: 800; color: #c62828;">PKR 0</div>
+                        </div>
+                        <div style="background: #fff8e1; padding: 20px; border-radius: var(--radius-md); border: 1px solid #ffe082;">
+                            <h4 style="font-size: 13px; color: #b8860b;">خالص موجودہ فنڈ</h4>
+                            <div id="financeNetBalance" style="font-size: 24px; font-weight: 800; color: #b8860b;">PKR 0</div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>واؤچر نمبر</th>
+                                    <th>قسم</th>
+                                    <th>کیٹیگری</th>
+                                    <th>رقم (PKR)</th>
+                                    <th>تفصیل / ہیڈ</th>
+                                    <th>تاریخ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="financeTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                                        مالیاتی ریکارڈ لوڈ ہو رہا ہے...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-bottom-inner" style="justify-content: center; text-align: center;">
+            <span>&copy; 2026 مصری خیل قومی اتحاد فاؤنڈیشن • تمام انتظامی حقوق برائے سیکریٹریٹ محفوظ ہیں</span>
+        </div>
+    </footer>
+
+    <script src="/frontend/src/js/i18n.js"></script>
+    <script src="/frontend/src/js/api.js"></script>
+    <script>
+        let currentAuthToken = localStorage.getItem('mkqi_token');
+        let currentAdminUser = JSON.parse(localStorage.getItem('mkqi_user') || 'null');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (currentAuthToken && currentAdminUser) {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        });
+
+        function showLogin() {
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('authHeaderAction').innerHTML = '';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('dashboardView').style.display = 'block';
+            document.getElementById('adminUserName').textContent = currentAdminUser.full_name || currentAdminUser.username;
+            document.getElementById('adminUserRole').textContent = currentAdminUser.role || 'ADMIN';
+            document.getElementById('authHeaderAction').innerHTML = `<button onclick="handleLogout()" class="btn btn-outline" style="font-size: 13px;">لاگ آؤٹ</button>`;
+            loadApplications();
+            loadApprovedMembers();
+            loadFinanceSummary();
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const errEl = document.getElementById('loginError');
+            errEl.style.display = 'none';
+            const u = document.getElementById('loginUsername').value;
+            const p = document.getElementById('loginPassword').value;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u, password: p })
+                });
+
+                if (!res.ok) {
+                    const data = await res.json();
+                    throw new Error(data.detail || 'لاگ ان کی معلومات درست نہیں ہیں۔');
+                }
+
+                const data = await res.json();
+                currentAuthToken = data.access_token;
+                currentAdminUser = data.user;
+                localStorage.setItem('mkqi_token', currentAuthToken);
+                localStorage.setItem('mkqi_user', JSON.stringify(currentAdminUser));
+                showDashboard();
+            } catch (err) {
+                errEl.textContent = err.message;
+                errEl.style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('mkqi_token');
+            localStorage.removeItem('mkqi_user');
+            currentAuthToken = null;
+            currentAdminUser = null;
+            showLogin();
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tabApplications').style.display = 'none';
+            document.getElementById('tabApprovedMembers').style.display = 'none';
+            document.getElementById('tabFinance').style.display = 'none';
+
+            if (tabName === 'applications') {
+                document.getElementById('tabApplications').style.display = 'block';
+                event.target.classList.add('active');
+                loadApplications();
+            } else if (tabName === 'approved-members') {
+                document.getElementById('tabApprovedMembers').style.display = 'block';
+                event.target.classList.add('active');
+                loadApprovedMembers();
+            } else if (tabName === 'finance') {
+                document.getElementById('tabFinance').style.display = 'block';
+                event.target.classList.add('active');
+                loadFinanceSummary();
+                loadFinanceTransactions();
+            }
+        }
+
+        async function loadApplications(statusFilter = '') {
+            const tbody = document.getElementById('applicationsTableBody');
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 20px;">لوڈ ہو رہا ہے...</td></tr>';
+
+            let url = '/api/members/applications';
+            if (statusFilter && statusFilter !== 'ALL') {
+                url += `?status_filter=${statusFilter}`;
+            }
+
+            try {
+                const res = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${currentAuthToken}` }
+                });
+                if (res.status === 401) {
+                    handleLogout();
+                    return;
+                }
+                const apps = await res.json();
+
+                // update counters
+                document.getElementById('statTotalApps').textContent = apps.length;
+                const pendingCount = apps.filter(a => a.status === 'PENDING').length;
+                document.getElementById('statPendingApps').textContent = pendingCount;
+
+                if (!apps || apps.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 25px; color: var(--text-muted);">کوئی درخواست موجود نہیں ہے۔</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = apps.map(app => {
+                    const badgeClass = app.status === 'APPROVED' ? 'badge-approved' : (app.status === 'REJECTED' ? 'badge-rejected' : 'badge-pending');
+                    const statusText = app.status === 'APPROVED' ? 'منظور شدہ' : (app.status === 'REJECTED' ? 'مسترد شدہ' : 'زیرِ جائزہ');
+
+                    let actions = '';
+                    if (app.status === 'PENDING' || app.status === 'UNDER_REVIEW') {
+                        actions = `
+                            <button class="btn btn-sm btn-primary" onclick="reviewApp(${app.id}, 'APPROVED')" style="padding: 4px 10px; font-size: 12px; margin-left: 4px;">منظور کریں</button>
+                            <button class="btn btn-sm btn-outline" onclick="reviewApp(${app.id}, 'REJECTED')" style="padding: 4px 10px; font-size: 12px; color: #c62828; border-color: #c62828;">مسترد</button>
+                        `;
+                    } else if (app.status === 'APPROVED') {
+                        actions = `<span style="color: #1b5e20; font-size: 12px; font-weight: 700;">کارڈ جاری شدہ ✓</span>`;
+                    } else {
+                        actions = `<span style="color: #c62828; font-size: 12px;">مسترد شدہ</span>`;
+                    }
+
+                    return `
+                        <tr>
+                            <td><b>${app.application_number}</b></td>
+                            <td>${app.full_name_ur} <br><small style="color: var(--text-muted);">${app.full_name_en}</small></td>
+                            <td>${app.father_name_ur || '-'}</td>
+                            <td>${app.mobile_number}</td>
+                            <td>${app.ancestral_region || '-'}</td>
+                            <td>${app.current_city}</td>
+                            <td><span class="badge ${badgeClass}">${statusText}</span></td>
+                            <td style="font-size: 12px;">${app.created_at ? app.created_at.substring(0, 10) : '-'}</td>
+                            <td style="text-align: center;">${actions}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">خرابی: ${err.message}</td></tr>`;
+            }
+        }
+
+        async function reviewApp(appId, newStatus) {
+            let notes = '';
+            if (newStatus === 'APPROVED') {
+                if (!confirm('کیا آپ اس درخواست کو منظور کر کے ڈیجیٹل ممبرشپ کارڈ جاری کرنا چاہتے ہیں؟')) return;
+                notes = 'سیکریٹریٹ کی جانب سے توثیق و منظوری مکمل';
+            } else {
+                notes = prompt('مسترد کرنے کی وجہ درج فرمائیں:', 'کاغذات و معلومات میں عدم مطابقت');
+                if (notes === null) return;
+            }
+
+            try {
+                const res = await fetch(`/api/members/applications/${appId}/review`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentAuthToken}`
+                    },
+                    body: JSON.stringify({
+                        status: newStatus,
+                        review_notes: notes
+                    })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    alert('خرابی: ' + (err.detail || 'کارروائی مکمل نہ ہو سکی'));
+                    return;
+                }
+
+                const result = await res.json();
+                alert(result.message || 'درخواست کی حیثیت کامیابی کے ساتھ تبدیل کر دی گئی۔');
+                loadApplications();
+                loadApprovedMembers();
+            } catch (e) {
+                alert('نیٹ ورک خرابی: ' + e.message);
+            }
+        }
+
+        async function loadApprovedMembers() {
+            const tbody = document.getElementById('approvedMembersTableBody');
+            try {
+                const res = await fetch('/api/members/directory');
+                const members = await res.json();
+                document.getElementById('statApprovedMembers').textContent = members.length;
+
+                if (!members || members.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 25px; color: var(--text-muted);">کوئی منظور شدہ رکن موجود نہیں ہے۔</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = members.map(m => {
+                    const cardBtn = m.card_token ? `
+                        <a href="/verify.html?token=${m.card_token}" target="_blank" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 12px; margin-left: 4px;">تصدیق دیکھیں</a>
+                        <a href="/api/cards/${m.card_token}/pdf" target="_blank" class="btn btn-sm btn-primary" style="padding: 4px 10px; font-size: 12px;">PDF کارڈ</a>
+                    ` : '<span style="color: var(--text-muted); font-size: 12px;">کارڈ زیر عمل</span>';
+
+                    return `
+                        <tr>
+                            <td><b style="color: var(--primary);">${m.membership_id}</b></td>
+                            <td>${m.full_name_ur} <br><small style="color: var(--text-muted);">${m.full_name_en}</small></td>
+                            <td>${m.mobile_number}</td>
+                            <td>${m.ancestral_region || '-'} (${m.ancestral_village || '-'})</td>
+                            <td>${m.occupation || '-'}</td>
+                            <td><span class="badge badge-approved">منظور شدہ</span></td>
+                            <td style="text-align: center;">${cardBtn}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">خرابی: ${err.message}</td></tr>`;
+            }
+        }
+
+        async function loadFinanceSummary() {
+            try {
+                const res = await fetch('/api/finance/summary', {
+                    headers: { 'Authorization': `Bearer ${currentAuthToken}` }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                document.getElementById('statNetBalance').textContent = 'PKR ' + data.net_balance.toLocaleString();
+                document.getElementById('financeTotalIncome').textContent = 'PKR ' + data.total_income.toLocaleString();
+                document.getElementById('financeTotalExpense').textContent = 'PKR ' + data.total_expense.toLocaleString();
+                document.getElementById('financeNetBalance').textContent = 'PKR ' + data.net_balance.toLocaleString();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function loadFinanceTransactions() {
+            const tbody = document.getElementById('financeTableBody');
+            try {
+                const res = await fetch('/api/finance/transactions', {
+                    headers: { 'Authorization': `Bearer ${currentAuthToken}` }
+                });
+                if (!res.ok) return;
+                const txs = await res.json();
+                if (!txs || txs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 25px; color: var(--text-muted);">کوئی مالیاتی اندراج موجود نہیں ہے۔</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = txs.map(t => `
+                    <tr>
+                        <td><b>${t.voucher_number}</b></td>
+                        <td><span class="badge ${t.transaction_type.includes('INCOME') || t.transaction_type.includes('DONATION') ? 'badge-approved' : 'badge-rejected'}">${t.transaction_type}</span></td>
+                        <td>${t.category}</td>
+                        <td style="font-weight: 700;">PKR ${t.amount.toLocaleString()}</td>
+                        <td>${t.description}</td>
+                        <td style="font-size: 12px;">${t.transaction_date ? t.transaction_date.substring(0, 10) : '-'}</td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">خرابی: ${e.message}</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>

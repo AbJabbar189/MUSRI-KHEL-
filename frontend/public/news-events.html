@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خبریں و سرگرمیاں | مصری خیل قومی اتحاد فاؤنڈیشن</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="stylesheet" href="/frontend/src/css/style.css">
+    <link rel="stylesheet" href="/frontend/src/css/rtl.css">
+</head>
+<body class="lang-ur">
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-contact">
+                <span>021-32768327 | info@misrikhel.org</span>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="ur">اردو</button>
+                <button class="lang-btn" data-lang="ps">پښتو</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="brand-wrapper">
+                <a href="/index.html"><img src="/images/logo.jpg" alt="Logo" class="brand-logo"></a>
+                <div class="brand-titles">
+                    <span class="brand-name" data-i18n="org_name">مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                    <span class="brand-motto" data-i18n="motto">اتحاد • خدمت • عزت • ترقی</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">صفحہ اول</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav_about">ہمارے متعلق</a></li>
+                    <li><a href="/history.html" class="nav-link" data-i18n="nav_history">برادری تاریخ</a></li>
+                    <li><a href="/leadership.html" class="nav-link" data-i18n="nav_leadership">قیادت و کمیٹیاں</a></li>
+                    <li><a href="/news-events.html" class="nav-link active" data-i18n="nav_news">خبریں و سرگرمیاں</a></li>
+                    <li><a href="/professionals.html" class="nav-link" data-i18n="nav_professionals">علماء و پروفیشنلز</a></li>
+                    <li><a href="/membership.html" class="nav-link" data-i18n="nav_membership">ممبرشپ پورٹل</a></li>
+                    <li><a href="/verify.html" class="nav-link" data-i18n="nav_verify">کارڈ تصدیق</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav_contact">رابطہ</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="/membership.html" class="btn btn-gold" data-i18n="btn_join">آن لائن ممبرشپ</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section style="background: linear-gradient(135deg, #072718 0%, #0D472B 100%); color: #fff; padding: 50px 0; text-align: center; border-bottom: 3px solid var(--secondary);">
+        <div class="container">
+            <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 10px;">خبریں، اعلانات و سرگرمیاں (News & Events)</h1>
+            <p style="color: var(--secondary); font-size: 17px;">مصری خیل قومی اتحاد فاؤنڈیشن کے تازہ ترین تنظیمی اعلانات، فلاحی پروگرام اور تصویری ریکارڈ</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section-padding">
+        <div class="container">
+            <!-- Filter Tabs -->
+            <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;">
+                <button class="btn btn-primary active-filter" onclick="filterNews('all')" style="padding: 10px 24px;">تمام اعلانات (All)</button>
+                <button class="btn btn-outline" onclick="filterNews('official')" style="padding: 10px 24px;">تنظیمی اعلانات (Official)</button>
+                <button class="btn btn-outline" onclick="filterNews('welfare')" style="padding: 10px 24px;">فلاحی سرگرمیاں (Welfare)</button>
+                <button class="btn btn-outline" onclick="filterNews('education')" style="padding: 10px 24px;">تعلیمی و یوتھ (Education)</button>
+            </div>
+
+            <!-- News Grid -->
+            <div class="grid grid-3" style="margin-bottom: 50px;">
+                <!-- News 1 -->
+                <div class="card news-card" data-category="official" style="display: flex; flex-direction: column;">
+                    <div style="height: 180px; background: linear-gradient(135deg, #1b5e20, #0D472B); display: flex; align-items: center; justify-content: center; color: var(--secondary);">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    </div>
+                    <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                        <span style="font-size: 12px; color: var(--secondary); font-weight: 700; margin-bottom: 6px;">15 اکتوبر 2026 • تنظیمی اعلان</span>
+                        <h3 style="font-size: 19px; color: var(--primary); margin-bottom: 12px;">مرکزی ڈیجیٹل ممبرشپ مہم کا باقاعدہ آغاز</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.8; flex: 1;">
+                            مصری خیل قومی اتحاد فاؤنڈیشن نے کراچی، شانگلہ، تورغر اور بونیر کے تمام برادری افراد کیلئے آن لائن نادرا طرز پر ڈیجیٹل ممبرشپ کارڈ سسٹم شروع کر دیا ہے۔
+                        </p>
+                        <a href="/membership.html" class="btn btn-primary" style="margin-top: 15px; font-size: 13px; text-align: center;">ابھی ممبرشپ لیں &larr;</a>
+                    </div>
+                </div>
+
+                <!-- News 2 -->
+                <div class="card news-card" data-category="welfare" style="display: flex; flex-direction: column;">
+                    <div style="height: 180px; background: linear-gradient(135deg, #0288d1, #01579b); display: flex; align-items: center; justify-content: center; color: #fff;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M19 10.5V6c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v4.5c-1.66 0-3 1.34-3 3V19c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-5.5c0-1.66-1.34-3-3-3zM7 6h10v3H7V6zm-2 9c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm14 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-8 4v-2h2v2h-2zm-3 0v-2h2v2H8zm6 0v-2h2v2h-2z"/></svg>
+                    </div>
+                    <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                        <span style="font-size: 12px; color: #0288d1; font-weight: 700; margin-bottom: 6px;">28 اکتوبر 2026 • فلاحی منصوبہ</span>
+                        <h3 style="font-size: 19px; color: var(--primary); margin-bottom: 12px;">شانگلہ اور تورغر کیلئے ونٹر ریلیف اور راشن پیکیج</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.8; flex: 1;">
+                            موسم سرما کے پیش نظر نادار اور مستحق خاندانوں کیلئے گرم بستر، کمبل اور ماہانہ راشن پیکیج کی فراہمی کا فیز ون مرحلہ تیار کر لیا گیا ہے۔
+                        </p>
+                        <a href="/contact.html" class="btn btn-outline" style="margin-top: 15px; font-size: 13px; text-align: center;">مزید تفصیلات &larr;</a>
+                    </div>
+                </div>
+
+                <!-- News 3 -->
+                <div class="card news-card" data-category="education" style="display: flex; flex-direction: column;">
+                    <div style="height: 180px; background: linear-gradient(135deg, #d4af37, #b8860b); display: flex; align-items: center; justify-content: center; color: #fff;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                    </div>
+                    <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                        <span style="font-size: 12px; color: var(--secondary); font-weight: 700; margin-bottom: 6px;">05 نومبر 2026 • تعلیمی شعبہ</span>
+                        <h3 style="font-size: 19px; color: var(--primary); margin-bottom: 12px;">مصری خیل اسٹوڈنٹس اسکالرشپ اسکیم 2026-27</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.8; flex: 1;">
+                            میڈیکل، انجینئرنگ، لاء اور آئی ٹی کے مستحق طلباء و طالبات کیلئے اعلیٰ تعلیمی وظائف اور مفت کوچنگ کلاسز کا شیڈول جاری کر دیا گیا ہے۔
+                        </p>
+                        <a href="/professionals.html" class="btn btn-outline" style="margin-top: 15px; font-size: 13px; text-align: center;">رہنمائی حاصل کریں &larr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Gallery Section -->
+            <div style="background: #fff; padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                <div class="section-title">
+                    <h2>تصویری جھلکیاں و تنظیمی اجلاس</h2>
+                    <p>مرکزی کونسل کے اجلاس، فلاحی اقدامات اور برادری کے تاریخی اجتماعات کی تصویری ریکارڈ</p>
+                </div>
+
+                <div class="grid grid-3" style="gap: 20px;">
+                    <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); background: #fdfbf7;">
+                        <div style="height: 180px; background: #e8f5e9; display: flex; align-items: center; justify-content: center;">
+                            <img src="/images/logo.jpg" alt="اجلاس" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div style="padding: 15px; text-align: center;">
+                            <h4 style="font-size: 15px; color: var(--primary); margin-bottom: 5px;">مرکزی رابطہ کمیٹی اجلاس (کراچی)</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">حالیہ تنظیمی حکمت عملی اور ممبرشپ جائزہ</p>
+                        </div>
+                    </div>
+
+                    <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); background: #fdfbf7;">
+                        <div style="height: 180px; background: #fff8e1; display: flex; align-items: center; justify-content: center;">
+                            <img src="/images/logo.jpg" alt="ریلیف کیمپ" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div style="padding: 15px; text-align: center;">
+                            <h4 style="font-size: 15px; color: var(--primary); margin-bottom: 5px;">فری میڈیکل کیمپ شانگلہ</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">ماہر ڈاکٹرز کے زیر انتظام مفت ادویات کی تقسیم</p>
+                        </div>
+                    </div>
+
+                    <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); background: #fdfbf7;">
+                        <div style="height: 180px; background: #e3f2fd; display: flex; align-items: center; justify-content: center;">
+                            <img src="/images/logo.jpg" alt="یوتھ کانفرنس" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div style="padding: 15px; text-align: center;">
+                            <h4 style="font-size: 15px; color: var(--primary); margin-bottom: 5px;">مصری خیل یوتھ کیریئر گائیڈنس</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">آئی ٹی و تکنیکی علوم پر خصوصی سیمینار</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <div class="brand-wrapper" style="margin-bottom: 16px;">
+                    <img src="/images/logo.jpg" alt="Logo" class="brand-logo" style="width: 44px; height: 44px;">
+                    <div class="brand-titles">
+                        <span class="brand-name" style="color: #fff; font-size: 17px;">مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                        <span class="brand-motto" style="color: var(--secondary); font-size: 11px;">اتحاد • خدمت • عزت • ترقی</span>
+                    </div>
+                </div>
+                <p style="font-size: 13px; line-height: 1.8; color: #a9c7b5;">
+                    مصری خیل برادری (کراچی، شانگلہ، تورغر، بونیر) کا غیر سیاسی، فلاحی و ادارہ جاتی ڈیجیٹل پلیٹ فارم۔
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">اہم روابط</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">صفحہ اول</a></li>
+                    <li><a href="/about.html">ہمارے متعلق</a></li>
+                    <li><a href="/history.html">برادری تاریخ</a></li>
+                    <li><a href="/leadership.html">قیادت و کمیٹیاں</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">خدمات</h4>
+                <ul class="footer-links">
+                    <li><a href="/membership.html">آن لائن ممبرشپ رجسٹریشن</a></li>
+                    <li><a href="/verify.html">ڈیجیٹل کارڈ تصدیق</a></li>
+                    <li><a href="/professionals.html">علماء و پروفیشنلز ڈائریکٹری</a></li>
+                    <li><a href="/admin.html">سیکریٹریٹ لاگ ان</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">مرکزی سیکریٹریٹ</h4>
+                <p style="font-size: 13px; color: #a9c7b5; line-height: 1.8;">
+                    کراچی، پاکستان<br>
+                    فون: 021-32768327<br>
+                    واٹس ایپ: 0300-1234567<br>
+                    ای میل: info@misrikhel.org
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span>&copy; 2026 جملہ حقوق مصری خیل قومی اتحاد فاؤنڈیشن کے نام محفوظ ہیں۔</span>
+                <span>ڈیزائن و ڈیجیٹل نظام: مصری خیل آئی ٹی ونگ</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/frontend/src/js/i18n.js"></script>
+    <script src="/frontend/src/js/api.js"></script>
+    <script src="/frontend/src/js/app.js"></script>
+    <script>
+        function filterNews(cat) {
+            const cards = document.querySelectorAll('.news-card');
+            cards.forEach(c => {
+                if (cat === 'all' || c.getAttribute('data-category') === cat) {
+                    c.style.display = 'flex';
+                } else {
+                    c.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.active-filter').forEach(b => b.classList.remove('active-filter'));
+            event.target.classList.add('active-filter');
+        }
+    </script>
+</body>
+</html>
