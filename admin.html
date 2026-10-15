@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سیکریٹریٹ کنٹرول پینل | مصری خیل قومی اتحاد فاؤنڈیشن</title>
-    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
-    <link rel="stylesheet" href="/frontend/src/css/style.css">
-    <link rel="stylesheet" href="/frontend/src/css/rtl.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
     <style>
         .admin-nav-tabs {
             display: flex;
@@ -107,7 +107,7 @@
     <header class="main-header">
         <div class="container header-inner">
             <div class="brand-wrapper">
-                <a href="/index.html"><img src="/images/logo.jpg" alt="Logo" class="brand-logo"></a>
+                <a href="index.html"><img src="images/logo.jpg" alt="Logo" class="brand-logo"></a>
                 <div class="brand-titles">
                     <span class="brand-name" data-i18n="org_name">مصری خیل قومی اتحاد فاؤنڈیشن</span>
                     <span class="brand-motto" data-i18n="motto">مرکزی انتظامی و سیکریٹریٹ پورٹل</span>
@@ -115,10 +115,10 @@
             </div>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="/index.html" class="nav-link">صفحہ اول</a></li>
-                    <li><a href="/membership.html" class="nav-link">ممبرشپ پورٹل</a></li>
-                    <li><a href="/verify.html" class="nav-link">کارڈ تصدیق</a></li>
-                    <li><a href="/admin.html" class="nav-link active">سیکریٹریٹ کنٹرول</a></li>
+                    <li><a href="index.html" class="nav-link">صفحہ اول</a></li>
+                    <li><a href="membership.html" class="nav-link">ممبرشپ پورٹل</a></li>
+                    <li><a href="verify.html" class="nav-link">کارڈ تصدیق</a></li>
+                    <li><a href="admin.html" class="nav-link active">سیکریٹریٹ کنٹرول</a></li>
                 </ul>
             </nav>
             <div id="authHeaderAction">
@@ -134,7 +134,7 @@
             <!-- VIEW 1: LOGIN BOX (When not authenticated) -->
             <div id="loginView" style="display: none; max-width: 450px; margin: 40px auto; background: #fff; padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-md);">
                 <div style="text-align: center; margin-bottom: 25px;">
-                    <img src="/images/logo.jpg" alt="Logo" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 12px; border: 2px solid var(--secondary);">
+                    <img src="images/logo.jpg" alt="Logo" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 12px; border: 2px solid var(--secondary);">
                     <h2 style="font-size: 22px; color: var(--primary);">سیکریٹریٹ لاگ ان</h2>
                     <p style="font-size: 13px; color: var(--text-muted);">مجاز عہدیداران و مرکزی سیکریٹریٹ ایڈمنسٹریشن</p>
                 </div>
@@ -314,8 +314,8 @@
         </div>
     </footer>
 
-    <script src="/frontend/src/js/i18n.js"></script>
-    <script src="/frontend/src/js/api.js"></script>
+    <script src="i18n.js"></script>
+    <script src="api.js"></script>
     <script>
         let currentAuthToken = localStorage.getItem('mkqi_token');
         let currentAdminUser = JSON.parse(localStorage.getItem('mkqi_user') || 'null');
@@ -523,7 +523,7 @@
 
                 tbody.innerHTML = members.map(m => {
                     const cardBtn = m.card_token ? `
-                        <a href="/verify.html?token=${m.card_token}" target="_blank" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 12px; margin-left: 4px;">تصدیق دیکھیں</a>
+                        <a href="verify.html?token=${m.card_token}" target="_blank" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 12px; margin-left: 4px;">تصدیق دیکھیں</a>
                         <a href="/api/cards/${m.card_token}/pdf" target="_blank" class="btn btn-sm btn-primary" style="padding: 4px 10px; font-size: 12px;">PDF کارڈ</a>
                     ` : '<span style="color: var(--text-muted); font-size: 12px;">کارڈ زیر عمل</span>';
 
