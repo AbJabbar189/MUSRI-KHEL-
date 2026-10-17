@@ -68,282 +68,393 @@
                 <p class="section-subtitle">مصری خیل قومی اتحاد فاؤنڈیشن کے مرکزی منتخب ذمہ داران و عہدیداران کی باضابطہ فہرست۔</p>
             </div>
 
-            <!-- Key Executive Leadership Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 50px;">
+            <!-- Filter Tabs & View Toggle -->
+            <div class="cabinet-filter-bar">
+                <button class="cabinet-filter-btn active" onclick="filterCabinet('ALL', this)">تمام مرکزی کابینہ (26)</button>
+                <button class="cabinet-filter-btn" onclick="filterCabinet('PRESIDIUM', this)">اعلیٰ قیادت و پریزیڈیم</button>
+                <button class="cabinet-filter-btn" onclick="filterCabinet('SECRETARIAT', this)">مرکزی سیکریٹریٹ</button>
+                <button class="cabinet-filter-btn" onclick="filterCabinet('DEPARTMENTAL', this)">شعبہ جاتی سیکرٹریز</button>
+                <button class="cabinet-filter-btn" onclick="filterCabinet('ACTIVE', this)">صرف فعال عہدیداران</button>
+            </div>
+
+            <div class="cabinet-view-toggle">
+                <button class="view-toggle-btn active" id="btnViewCards" onclick="setCabinetView('cards')">
+                    🪪 جدید کارڈز ویو (Cards Grid)
+                </button>
+                <button class="view-toggle-btn" id="btnViewTable" onclick="setCabinetView('table')">
+                    📋 باضابطہ گزیٹ لسٹ (Official Table)
+                </button>
+            </div>
+
+            <!-- VIEW 1: MODERN CABINET CARDS GRID -->
+            <div id="cabinetCardsContainer" class="cabinet-grid">
+
                 <!-- 1. Chief Patron -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1.5px solid var(--secondary); box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Chief Patron" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        سرپرستِ اعلیٰ (Chief Patron)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">عبد اللہ بھائی</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">مرکزی سپریم قیادت</p>
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#01</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">سرپرستِ اعلیٰ</span>
+                    <h3 class="cabinet-name">عبد اللہ بھائی</h3>
+                    <div class="cabinet-subtext">مرکزی سپریم مشاورتی کونسل</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
                 </div>
 
-                <!-- 2. President -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 2px solid #0D472B; box-shadow: var(--shadow-md); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="President" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid #D4AF37; margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: #0D472B; color: #D4AF37; font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        صدر مصری خیل اتحاد (President)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">نصیب زمین بھائی</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">سربراہ مرکزی انتظامی کابینہ</p>
+                <!-- 2. Chairman -->
+                <div class="cabinet-card is-vacant" data-cat="PRESIDIUM">
+                    <span class="cabinet-card-number">#02</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">چیئرمین</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">مجلسِ شوریٰ و قیادت</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
                 </div>
 
                 <!-- 3. Vice Chairman -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Vice Chairman" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        وائس چیئرمین (Vice Chairman)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">محمد ذوالقرنین</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">مرکزی مشاورتی کونسل</p>
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#03</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">وائس چیئرمین</span>
+                    <h3 class="cabinet-name">محمد ذوالقرنین</h3>
+                    <div class="cabinet-subtext">مرکزی سپریم مشاورتی کونسل</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
                 </div>
 
                 <!-- 4. Deputy Chairman -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Deputy Chairman" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        ڈپٹی چیئرمین (Deputy Chairman)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">صلاح الدین ایوبی</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">مرکزی مشاورتی کونسل</p>
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#04</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">ڈپٹی چیئرمین</span>
+                    <h3 class="cabinet-name">صلاح الدین ایوبی</h3>
+                    <div class="cabinet-subtext">مرکزی سپریم مشاورتی کونسل</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
                 </div>
 
-                <!-- 5. General Secretary -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1.5px solid #0D472B; box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="General Secretary" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid #D4AF37; margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        جنرل سیکرٹری (General Secretary)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">فرید الرحمٰن</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">انتظامی و تنظیمی سربراہ</p>
+                <!-- 5. Deputy Vice Chairman -->
+                <div class="cabinet-card is-vacant" data-cat="PRESIDIUM">
+                    <span class="cabinet-card-number">#05</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">ڈپٹی وائس چیئرمین</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">مجلسِ شوریٰ و قیادت</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
                 </div>
 
-                <!-- 6. Joint Secretary -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1.5px solid #D4AF37; box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Joint Secretary" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid #0D472B; margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: #e8f5e9; color: #1b5e20; font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
+                <!-- 6. President -->
+                <div class="cabinet-card" style="border: 2px solid #0D472B; background: linear-gradient(180deg, #FFFFFF 0%, #FCFDFB 100%);" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number" style="background: #0D472B; color: #D4AF37;">#06</span>
+                    <div class="cabinet-avatar-wrap" style="background: linear-gradient(135deg, #0D472B, #D4AF37); padding: 4px;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #0D472B; color: #D4AF37;">صدر مصری خیل قومی اتحاد</span>
+                    <h3 class="cabinet-name" style="color: #0D472B; font-size: 22px;">نصیب زمین بھائی</h3>
+                    <div class="cabinet-subtext">سربراہ مرکزی انتظامی باڈی و کابینہ</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال صدر</span></div>
+                </div>
+
+                <!-- 7. Vice President -->
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#07</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">نائب صدر</span>
+                    <h3 class="cabinet-name">نظیر محمد بھائی</h3>
+                    <div class="cabinet-subtext">صدارتی معاونت و تنظیمی امور</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 8. Senior Vice President -->
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#08</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">سینئر نائب صدر</span>
+                    <h3 class="cabinet-name">محمد نواب بھائی</h3>
+                    <div class="cabinet-subtext">صدارتی کونسل و مشاورت</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 9. Junior Vice President -->
+                <div class="cabinet-card" data-cat="PRESIDIUM ACTIVE">
+                    <span class="cabinet-card-number">#09</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">جوئنیر نائب صدر</span>
+                    <h3 class="cabinet-name">مولانا محمد سلیمان بھائی</h3>
+                    <div class="cabinet-subtext">علمی و تنظیمی امور</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 10. General Secretary -->
+                <div class="cabinet-card" style="border: 2px solid #0D472B;" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number" style="background: #0D472B; color: #D4AF37;">#10</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #0D472B; color: #D4AF37;">جنرل سیکرٹری</span>
+                    <h3 class="cabinet-name" style="color: #0D472B; font-size: 21px;">فرید الرحمٰن</h3>
+                    <div class="cabinet-subtext">سربراہ مرکزی سیکریٹریٹ و انتظامیہ</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال جنرل سیکرٹری</span></div>
+                </div>
+
+                <!-- 11. Deputy General Secretary -->
+                <div class="cabinet-card is-vacant" data-cat="SECRETARIAT">
+                    <span class="cabinet-card-number">#11</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">ڈپٹی جنرل سیکرٹری</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">مرکزی سیکریٹریٹ</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 12. Naib Deputy General Secretary -->
+                <div class="cabinet-card" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number">#12</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">نائب ڈپٹی جنرل سیکرٹری</span>
+                    <h3 class="cabinet-name">فخر البشر صاحب</h3>
+                    <div class="cabinet-subtext">سیکریٹریٹ معاونت و نظم</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 13. Joint Secretary (TAJ MOEENULLAH BHAI - SPECIAL HIGHLIGHT) -->
+                <div class="cabinet-card highlight-joint-sec" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number">#13</span>
+                    <div class="cabinet-avatar-wrap" style="background: linear-gradient(135deg, #10B981, #D4AF37); padding: 4px;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #065F46; color: #D1FAE5; font-size: 14px;">
                         جوائنٹ سیکرٹری (Joint Secretary)
                     </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">تاج معین اللہ بھائی</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">سیکریٹریٹ و کوآرڈینیشن</p>
-                </div>
-
-                <!-- 7. Treasurer -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Treasurer" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        خزانچی (Treasurer)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">مولانا مطیع اللہ صاحب</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">مالیاتی و فنڈز امانت</p>
-                </div>
-
-                <!-- 8. Organizing Secretary -->
-                <div style="background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 25px; text-align: center;">
-                    <img src="images/logo.jpg" alt="Organizing Secretary" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 14px;">
-                    <span style="display: inline-block; background: var(--secondary-light); color: var(--secondary-dark); font-weight: 700; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-bottom: 8px;">
-                        سیکرٹری تنظیم (Organizing Secretary)
-                    </span>
-                    <h3 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 4px;">محمد زمان درویش</h3>
-                    <p style="color: var(--text-muted); font-size: 13.5px;">تنظیمی استحکام و یونٹس</p>
-                </div>
-            </div>
-
-            <!-- Complete Official Cabinet Directory Table (Body Members 1-26) -->
-            <div style="background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 30px; margin-bottom: 60px; box-shadow: var(--shadow-sm);">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--secondary); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                    <div>
-                        <h3 style="font-size: 22px; color: var(--primary); margin: 0;">📋 مکمل سرکاری مرکزی کابینہ ڈائریکٹری (Body Members)</h3>
-                        <p style="font-size: 13.5px; color: var(--text-muted); margin: 4px 0 0 0;">مصری خیل قومی اتحاد کے تمام 26 مرکزی مناصب و ذمہ داران کا باضابطہ گزیٹیر</p>
+                    <h3 class="cabinet-name" style="color: #065F46; font-size: 22px;">تاج معین اللہ بھائی</h3>
+                    <div class="cabinet-subtext" style="color: #047857; font-weight: 700;">
+                        ⭐ باضابطہ تعیناتی بطور جوائنٹ سیکرٹری
                     </div>
                     <div>
-                        <span style="background: #0D472B; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;">
-                            سیشن 2026ء - باضابطہ گزیٹ
+                        <span class="cabinet-status-pill active-pill" style="background: #065F46; color: #fff; border: none; font-size: 12.5px; padding: 5px 14px;">
+                            ✓ باضابطہ جوائنٹ سیکرٹری
                         </span>
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="admin-table">
-                        <thead>
-                            <tr style="background: #F1F5F9;">
-                                <th style="width: 60px; text-align: center;">نمبر شمار</th>
-                                <th>عہدہ و منصب (Designation)</th>
-                                <th>نامِ نامی عہدیدار (Office Bearer)</th>
-                                <th>حیثیت / اسٹیٹس</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">1</td>
-                                <td><b>سرپرستِ اعلیٰ</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">عبد اللہ بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">2</td>
-                                <td><b>چیئرمین</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">3</td>
-                                <td><b>وائس چیئرمین</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">محمد ذوالقرنین</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">4</td>
-                                <td><b>ڈپٹی چیئرمین</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">صلاح الدین ایوبی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">5</td>
-                                <td><b>ڈپٹی وائس چیئرمین</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr style="background: #f8faf8;">
-                                <td style="text-align: center; font-weight: 700;">6</td>
-                                <td><b>صدر</b></td>
-                                <td style="font-weight: 800; color: #0D472B; font-size: 15px;">نصیب زمین بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">7</td>
-                                <td><b>نائب صدر</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">نظیر محمد بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">8</td>
-                                <td><b>سینئر نائب صدر</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">محمد نواب بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">9</td>
-                                <td><b>جوئنیر نائب صدر</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">مولانا محمد سلیمان بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr style="background: #f8faf8;">
-                                <td style="text-align: center; font-weight: 700;">10</td>
-                                <td><b>جنرل سیکرٹری</b></td>
-                                <td style="font-weight: 800; color: #0D472B; font-size: 15px;">فرید الرحمٰن</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">11</td>
-                                <td><b>ڈپٹی جنرل سیکرٹری</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">12</td>
-                                <td><b>نائب ڈپٹی جنرل سیکرٹری</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">فخر البشر صاحب</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr style="background: #eef9f2; border: 1.5px solid #a7f3d0;">
-                                <td style="text-align: center; font-weight: 700; color: #0D472B;">13</td>
-                                <td><b>جوائنٹ سیکرٹری</b></td>
-                                <td style="font-weight: 800; color: #0D472B; font-size: 15px;">
-                                    تاج معین اللہ بھائی 
-                                    <small style="display: block; color: #059669; font-size: 11.5px; font-weight: normal;">(باضابطہ جوائنٹ سیکرٹری)</small>
-                                </td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">14</td>
-                                <td><b>سیکرٹری اطلاعات</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">15</td>
-                                <td><b>سیکرٹری مالیات</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">16</td>
-                                <td><b>خزانچی</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">مولانا مطیع اللہ صاحب</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">17</td>
-                                <td><b>سیکرٹری تنظیم</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">محمد زمان درویش</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">18</td>
-                                <td><b>سیکرٹری نشر و اشاعت</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">19</td>
-                                <td><b>سیکرٹری تعلیم</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">حیات گل بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">20</td>
-                                <td><b>سیکرٹری فلاحی امور</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">نور قیوم بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">21</td>
-                                <td><b>سیکرٹری قانونی امور</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">22</td>
-                                <td><b>میڈیا کوآرڈینیٹر</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">23</td>
-                                <td><b>سوشل میڈیا انچارج</b></td>
-                                <td style="color: var(--text-muted);">زیرِ انتخاب / خالی</td>
-                                <td><span class="badge badge-pending">زیرِ تقرری</span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; font-weight: 700;">24</td>
-                                <td><b>آفس سیکرٹری</b></td>
-                                <td style="font-weight: 700; color: #0D472B;">عبد القوی بھائی</td>
-                                <td><span class="badge badge-approved">فعال عہدیدار</span></td>
-                            </tr>
-                            <tr style="background: #fff5f5;">
-                                <td style="text-align: center; font-weight: 700; color: #b91c1c;">25</td>
-                                <td><b>پروجیکٹ ڈائریکٹر</b></td>
-                                <td style="color: #64748B;">
-                                    خالی / زیرِ نو تقرری
-                                    <small style="display: block; color: #94A3B8; font-size: 11.5px;">(سابقہ عہدیدار محمد اقبال بھائی سبکدوش ہو چکے ہیں)</small>
-                                </td>
-                                <td><span class="badge badge-rejected">عہدہ خالی</span></td>
-                            </tr>
-                            <tr style="background: #fafafa;">
-                                <td style="text-align: center; font-weight: 700;">26</td>
-                                <td><b>رابطہ سیکرٹری</b></td>
-                                <td style="color: #64748B;">
-                                    زیرِ نو تقرری
-                                    <small style="display: block; color: #059669; font-size: 11.5px;">(تاج معین اللہ بھائی اب جوائنٹ سیکرٹری مقرر ہو چکے ہیں)</small>
-                                </td>
-                                <td><span class="badge badge-pending">زیرِ نو تقرری</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- 14. Secretary Information -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#14</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">سیکرٹری اطلاعات</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">شعبہ اطلاعات و نشریات</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
                 </div>
+
+                <!-- 15. Secretary Finance -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#15</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">سیکرٹری مالیات</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">مالیاتی امور و بجٹ</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 16. Treasurer -->
+                <div class="cabinet-card" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number">#16</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">خزانچی (Treasurer)</span>
+                    <h3 class="cabinet-name">مولانا مطیع اللہ صاحب</h3>
+                    <div class="cabinet-subtext">مالیات، فنڈز و بیت المال امانت</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 17. Organizing Secretary -->
+                <div class="cabinet-card" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number">#17</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">سیکرٹری تنظیم</span>
+                    <h3 class="cabinet-name">محمد زمان درویش</h3>
+                    <div class="cabinet-subtext">تنظیمی استحکام و زونل یونٹس</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 18. Secretary Publications -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#18</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">سیکرٹری نشر و اشاعت</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">اشاعتی امور و لٹریچر</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 19. Education Secretary -->
+                <div class="cabinet-card" data-cat="DEPARTMENTAL ACTIVE">
+                    <span class="cabinet-card-number">#19</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">سیکرٹری تعلیم</span>
+                    <h3 class="cabinet-name">حیات گل بھائی</h3>
+                    <div class="cabinet-subtext">تعلیمی وظائف و رہنمائی کونسل</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 20. Welfare Secretary -->
+                <div class="cabinet-card" data-cat="DEPARTMENTAL ACTIVE">
+                    <span class="cabinet-card-number">#20</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">سیکرٹری فلاحی امور</span>
+                    <h3 class="cabinet-name">نور قیوم بھائی</h3>
+                    <div class="cabinet-subtext">عوامی امداد، راشن و فلاحی پراجیکٹس</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 21. Legal Affairs -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#21</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">سیکرٹری قانونی امور</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">قانونی مشاورت و مصالحت</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 22. Media Coordinator -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#22</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">میڈیا کوآرڈینیٹر</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">پریس و میڈیا کوریج</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 23. Social Media Incharge -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#23</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #64748B;">سوشل میڈیا انچارج</span>
+                    <h3 class="cabinet-name" style="color: #94A3B8;">زیرِ انتخاب</h3>
+                    <div class="cabinet-subtext">ڈیجیٹل پورٹل و سوشل میڈیا</div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 24. Office Secretary -->
+                <div class="cabinet-card" data-cat="SECRETARIAT ACTIVE">
+                    <span class="cabinet-card-number">#24</span>
+                    <div class="cabinet-avatar-wrap">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img">
+                    </div>
+                    <span class="cabinet-role-tag">آفس سیکرٹری</span>
+                    <h3 class="cabinet-name">عبد القوی بھائی</h3>
+                    <div class="cabinet-subtext">دفتری ریکارڈ، مراسلت و رابطہ</div>
+                    <div><span class="cabinet-status-pill active-pill">✓ باضابطہ فعال عہدیدار</span></div>
+                </div>
+
+                <!-- 25. Project Director (VACANT - MUHAMMAD IQBAL RETIRED) -->
+                <div class="cabinet-card is-vacant" style="border-color: #FECACA; background: #FFF5F5;" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number" style="background: #FEE2E2; color: #DC2626;">#25</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.4;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #FEE2E2; color: #DC2626;">پروجیکٹ ڈائریکٹر</span>
+                    <h3 class="cabinet-name" style="color: #991B1B;">عہدہ خالی</h3>
+                    <div class="cabinet-subtext" style="color: #DC2626;">
+                        سابقہ عہدیدار محمد اقبال بھائی سبکدوش
+                    </div>
+                    <div><span class="cabinet-status-pill vacant-pill" style="background: #FEE2E2; color: #DC2626; border-color: #FCA5A5;">خالی / زیرِ نو تقرری</span></div>
+                </div>
+
+                <!-- 26. Liaison Secretary (TAJ MOEENULLAH MOVED TO JOINT SEC) -->
+                <div class="cabinet-card is-vacant" data-cat="DEPARTMENTAL">
+                    <span class="cabinet-card-number">#26</span>
+                    <div class="cabinet-avatar-wrap" style="background: #E2E8F0;">
+                        <img src="images/logo.jpg" alt="Logo" class="cabinet-avatar-img" style="opacity: 0.5;">
+                    </div>
+                    <span class="cabinet-role-tag" style="background: #F1F5F9; color: #475569;">رابطہ سیکرٹری</span>
+                    <h3 class="cabinet-name" style="color: #64748B;">زیرِ نو تقرری</h3>
+                    <div class="cabinet-subtext">
+                        تاج معین اللہ بھائی اب جوائنٹ سیکرٹری مقرر ہو چکے ہیں
+                    </div>
+                    <div><span class="cabinet-status-pill vacant-pill">⏳ زیرِ نو تقرری</span></div>
+                </div>
+
+            </div>
+
+            <!-- VIEW 2: OFFICIAL GAZETTEER TABLE (ELEGANTLY STYLED) -->
+            <div id="cabinetTableContainer" class="cabinet-table-wrapper" style="display: none;">
+                <table class="cabinet-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center;">نمبر</th>
+                            <th style="width: 32%;">عہدہ و منصب (Designation)</th>
+                            <th style="width: 36%;">نامِ نامی عہدیدار (Office Bearer)</th>
+                            <th style="width: 22%; text-align: center;">حیثیت و کیفیت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cabinetTableBody">
+                        <tr><td style="text-align: center; font-weight: 800;">01</td><td><b>سرپرستِ اعلیٰ</b></td><td style="font-weight: 800; color: #0D472B;">عبد اللہ بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">02</td><td><b>چیئرمین</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">03</td><td><b>وائس چیئرمین</b></td><td style="font-weight: 800; color: #0D472B;">محمد ذوالقرنین</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">04</td><td><b>ڈپٹی چیئرمین</b></td><td style="font-weight: 800; color: #0D472B;">صلاح الدین ایوبی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">05</td><td><b>ڈپٹی وائس چیئرمین</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr style="background: #f0fdf4 !important; border-right: 4px solid #0D472B;"><td style="text-align: center; font-weight: 800; color: #0D472B;">06</td><td><b style="color: #0D472B; font-size: 16px;">صدر مصری خیل قومی اتحاد</b></td><td style="font-weight: 800; color: #0D472B; font-size: 17px;">نصیب زمین بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">صدرِ تنظیم</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">07</td><td><b>نائب صدر</b></td><td style="font-weight: 800; color: #0D472B;">نظیر محمد بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">08</td><td><b>سینئر نائب صدر</b></td><td style="font-weight: 800; color: #0D472B;">محمد نواب بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">09</td><td><b>جوئنیر نائب صدر</b></td><td style="font-weight: 800; color: #0D472B;">مولانا محمد سلیمان بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr style="background: #f0fdf4 !important; border-right: 4px solid #0D472B;"><td style="text-align: center; font-weight: 800; color: #0D472B;">10</td><td><b style="color: #0D472B; font-size: 16px;">جنرل سیکرٹری</b></td><td style="font-weight: 800; color: #0D472B; font-size: 17px;">فرید الرحمٰن</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال جنرل سیکرٹری</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">11</td><td><b>ڈپٹی جنرل سیکرٹری</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">12</td><td><b>نائب ڈپٹی جنرل سیکرٹری</b></td><td style="font-weight: 800; color: #0D472B;">فخر البشر صاحب</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr class="row-joint-sec"><td style="text-align: center; font-weight: 800; color: #065F46;">13</td><td><b style="color: #065F46; font-size: 16px;">جوائنٹ سیکرٹری (Joint Secretary)</b></td><td><b style="color: #065F46; font-size: 17px;">تاج معین اللہ بھائی</b> <small style="display: block; color: #047857; font-weight: 700;">(باضابطہ جوائنٹ سیکرٹری)</small></td><td style="text-align: center;"><span class="cabinet-status-pill active-pill" style="background: #065F46; color: #fff;">باضابطہ جوائنٹ سیکرٹری</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">14</td><td><b>سیکرٹری اطلاعات</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">15</td><td><b>سیکرٹری مالیات</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">16</td><td><b>خزانچی</b></td><td style="font-weight: 800; color: #0D472B;">مولانا مطیع اللہ صاحب</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">17</td><td><b>سیکرٹری تنظیم</b></td><td style="font-weight: 800; color: #0D472B;">محمد زمان درویش</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">18</td><td><b>سیکرٹری نشر و اشاعت</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">19</td><td><b>سیکرٹری تعلیم</b></td><td style="font-weight: 800; color: #0D472B;">حیات گل بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">20</td><td><b>سیکرٹری فلاحی امور</b></td><td style="font-weight: 800; color: #0D472B;">نور قیوم بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">21</td><td><b>سیکرٹری قانونی امور</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">22</td><td><b>میڈیا کوآرڈینیٹر</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">23</td><td><b>سوشل میڈیا انچارج</b></td><td style="color: #64748B;">زیرِ انتخاب / خالی</td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ تقرری</span></td></tr>
+                        <tr><td style="text-align: center; font-weight: 800;">24</td><td><b>آفس سیکرٹری</b></td><td style="font-weight: 800; color: #0D472B;">عبد القوی بھائی</td><td style="text-align: center;"><span class="cabinet-status-pill active-pill">فعال عہدیدار</span></td></tr>
+                        <tr style="background: #FFF5F5 !important; border-right: 4px solid #EF4444;"><td style="text-align: center; font-weight: 800; color: #DC2626;">25</td><td><b style="color: #B91C1C;">پروجیکٹ ڈائریکٹر</b></td><td style="color: #DC2626;">خالی / زیرِ نو تقرری <small style="display: block; color: #64748B;">(سابقہ عہدیدار محمد اقبال بھائی سبکدوش)</small></td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill" style="background: #FEE2E2; color: #DC2626;">عہدہ خالی</span></td></tr>
+                        <tr class="row-vacant"><td style="text-align: center; font-weight: 800;">26</td><td><b>رابطہ سیکرٹری</b></td><td style="color: #64748B;">زیرِ نو تقرری <small style="display: block; color: #059669;">(تاج معین اللہ بھائی اب جوائنٹ سیکرٹری ہیں)</small></td><td style="text-align: center;"><span class="cabinet-status-pill vacant-pill">زیرِ نو تقرری</span></td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Regional Working Committees -->
@@ -384,5 +495,40 @@
 
     <script src="i18n.js"></script>
     <script src="app.js"></script>
+    <script>
+        function filterCabinet(category, btnElement) {
+            document.querySelectorAll('.cabinet-filter-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            const cards = document.querySelectorAll('.cabinet-card');
+            cards.forEach(card => {
+                const cats = card.getAttribute('data-cat') || '';
+                if (category === 'ALL' || cats.includes(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function setCabinetView(mode) {
+            const cardsView = document.getElementById('cabinetCardsContainer');
+            const tableView = document.getElementById('cabinetTableContainer');
+            const btnCards = document.getElementById('btnViewCards');
+            const btnTable = document.getElementById('btnViewTable');
+
+            if (mode === 'table') {
+                cardsView.style.display = 'none';
+                tableView.style.display = 'block';
+                btnCards.classList.remove('active');
+                btnTable.classList.add('active');
+            } else {
+                cardsView.style.display = 'grid';
+                tableView.style.display = 'none';
+                btnCards.classList.add('active');
+                btnTable.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 </html>
