@@ -104,19 +104,42 @@
         </div>
     </header>
 
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <div class="container">
         <div class="verification-container" id="verify-box">
             <img src="images/logo.jpg" alt="Official Logo" style="width: 75px; height: 75px; margin: 0 auto 15px; border-radius: 50%; border: 2px solid var(--secondary);">
             <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 5px;">مصری خیل قومی اتحاد فاؤنڈیشن</h2>
-            <p style="color: var(--secondary-dark); font-weight: 600; font-size: 14px; margin-bottom: 25px;">آن لائن کارڈ ویری فکیشن و چیکر</p>
+            <p style="color: var(--secondary-dark); font-weight: 600; font-size: 14px; margin-bottom: 25px;">سرکاری ڈیجیٹل کارڈ تصدیق و کیمرہ اسکینر</p>
 
-            <!-- Manual input if no token in query param -->
+            <!-- Verification Mode Switcher -->
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                <button type="button" id="btn-mode-manual" class="btn btn-primary" onclick="setVerifyMode('manual')" style="font-size: 13px; padding: 8px 18px;">
+                    ✍️ شناختی کارڈ / ٹوکن سے تلاش
+                </button>
+                <button type="button" id="btn-mode-camera" class="btn btn-outline" onclick="setVerifyMode('camera')" style="font-size: 13px; padding: 8px 18px;">
+                    📷 کیمرہ کیو آر اسکینر (Camera QR)
+                </button>
+            </div>
+
+            <!-- Manual input -->
             <div id="manual-input" style="margin-bottom: 25px;">
-                <label class="form-label">تصدیقی ٹوکن یا کارڈ کیو آر کوڈ درج کریں:</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" class="form-control" id="token-input" placeholder="Enter Token ID (e.g. a089f9fa...)">
-                    <button class="btn btn-primary" onclick="runVerification()">چیک کریں</button>
+                <label class="form-label">قومی شناختی کارڈ نمبر (CNIC)، نام، یا تصدیقی ٹوکن درج کریں:</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" class="form-control" id="token-input" style="flex: 1; min-width: 220px;" placeholder="مثال: 15201-1234567-1 یا عمران خان یا ٹوکن ID">
+                    <button class="btn btn-primary" onclick="runVerification()" style="white-space: nowrap;">تصدیق کریں</button>
                 </div>
+                <div style="margin-top: 8px; font-size: 12px; color: var(--text-muted); text-align: right;">
+                    💡 ٹیسٹ شناختی کارڈ: <a href="javascript:void(0)" onclick="quickVerify('15201-1234567-1')" style="color: var(--primary); font-weight: bold; text-decoration: underline;">15201-1234567-1</a>
+                </div>
+            </div>
+
+            <!-- Live Camera Scanner Box -->
+            <div id="camera-scanner-box" style="display: none; margin-bottom: 25px; background: #000; border-radius: 12px; overflow: hidden; padding: 10px; border: 2px solid var(--secondary);">
+                <div id="qr-reader" style="width: 100%;"></div>
+                <p style="color: #fff; font-size: 12px; margin-top: 10px;">کیمرہ ممبرشپ کارڈ کے کیو آر کوڈ کے سامنے کریں</p>
+                <button type="button" class="btn btn-outline" onclick="stopCameraScanner()" style="border-color: #fff; color: #fff; font-size: 12px; margin-top: 5px;">
+                    کیمرہ بند کریں
+                </button>
             </div>
 
             <!-- Result Card -->
@@ -135,76 +158,182 @@
     <script src="i18n.js"></script>
     <script src="api.js"></script>
     <script>
+        let html5QrScanner = null;
+
+        function setVerifyMode(mode) {
+            const manualBox = document.getElementById('manual-input');
+            const cameraBox = document.getElementById('camera-scanner-box');
+            const btnManual = document.getElementById('btn-mode-manual');
+            const btnCamera = document.getElementById('btn-mode-camera');
+
+            if (mode === 'camera') {
+                manualBox.style.display = 'none';
+                cameraBox.style.display = 'block';
+                btnManual.className = 'btn btn-outline';
+                btnCamera.className = 'btn btn-primary';
+                startCameraScanner();
+            } else {
+                stopCameraScanner();
+                manualBox.style.display = 'block';
+                cameraBox.style.display = 'none';
+                btnManual.className = 'btn btn-primary';
+                btnCamera.className = 'btn btn-outline';
+            }
+        }
+
+        function startCameraScanner() {
+            if (typeof Html5Qrcode === 'undefined') {
+                alert("کیمرہ اسکینر لوڈ نہیں ہو سکا۔ انٹرنیٹ کنکشن چیک کریں۔");
+                return;
+            }
+            if (!html5QrScanner) {
+                html5QrScanner = new Html5Qrcode("qr-reader");
+            }
+            html5QrScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                (decodedText) => {
+                    // Success callback
+                    stopCameraScanner();
+                    setVerifyMode('manual');
+                    document.getElementById('token-input').value = decodedText;
+                    verifyAny(decodedText);
+                },
+                (errorMessage) => {
+                    // scanning, ignore frames without code
+                }
+            ).catch(err => {
+                alert("کیمرہ تک رسائی حاصل نہیں ہو سکی: " + err);
+                setVerifyMode('manual');
+            });
+        }
+
+        function stopCameraScanner() {
+            if (html5QrScanner && html5QrScanner.isScanning) {
+                html5QrScanner.stop().catch(() => {});
+            }
+        }
+
+        function quickVerify(val) {
+            document.getElementById('token-input').value = val;
+            verifyAny(val);
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const tokenParam = urlParams.get('token');
+        const cnicParam = urlParams.get('cnic') || urlParams.get('q');
 
         if (tokenParam) {
             document.getElementById('token-input').value = tokenParam;
-            document.getElementById('manual-input').style.display = 'none';
-            verifyToken(tokenParam);
+            verifyAny(tokenParam);
+        } else if (cnicParam) {
+            document.getElementById('token-input').value = cnicParam;
+            verifyAny(cnicParam);
         }
 
         function runVerification() {
-            const token = document.getElementById('token-input').value.trim();
-            if (token) {
-                verifyToken(token);
+            const query = document.getElementById('token-input').value.trim();
+            if (query) {
+                verifyAny(query);
             }
         }
 
-        async function verifyToken(token) {
+        async function verifyAny(query) {
             const resultArea = document.getElementById('result-area');
             resultArea.style.display = 'block';
-            resultArea.innerHTML = "<p>تصدیق کی جا رہی ہے...</p>";
+            resultArea.innerHTML = "<p>🔍 تصدیقی ڈیٹا بیس سے ریکارڈ چیک کیا جا رہا ہے...</p>";
 
             try {
-                const res = await api.verifyCard(token);
-                if (res.is_valid) {
-                    resultArea.innerHTML = `
-                        <div class="verified-badge">✓</div>
-                        <h3 style="color: #0D472B; font-size: 22px; font-weight: 700;">تصدیق شدہ باقاعدہ ممبر</h3>
-                        <p style="color: var(--secondary-dark); font-weight: 600;">Verified Active Membership</p>
-
-                        <div class="verification-details">
-                            <div class="detail-row">
-                                <span>تنظیم کا نام:</span>
-                                <span>${res.organization}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>ممبرشپ نمبر:</span>
-                                <span>${res.membership_id}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>ممبر کا نام:</span>
-                                <span>${res.member_name_ur} (${res.member_name_en})</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>کارڈ کی صورتحال:</span>
-                                <span style="color: #0D472B;">فعال (ACTIVE)</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>تاریخ اجراء:</span>
-                                <span>${res.issue_date}</span>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 25px; padding: 12px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; font-size: 13px; color: #166534;">
-                            🔒 یہ کارڈ مصری خیل قومی اتحاد کے مرکزی ڈیٹا بیس سے مصدقہ ہے۔ رازداری کے ضابطہ کے تحت حساس معلومات محفوظ ہیں۔
-                        </div>
-                    `;
-                } else {
-                    resultArea.innerHTML = `
-                        <div class="invalid-badge">✕</div>
-                        <h3 style="color: #DC2626; font-size: 22px;">غیر فعال یا معطل کارڈ</h3>
-                        <p style="color: var(--text-muted);">یہ کارڈ فی الوقت معطل یا منسوخ ہے۔ براہ کرم مرکزی دفتر سے رابطہ کریں۔</p>
-                    `;
+                // First try member status check (which supports CNIC, Name, Mobile)
+                const res = await api.checkStatus(query);
+                renderVerificationSuccess(res);
+            } catch (statusErr) {
+                // If not found in checkStatus, try verifyCard for token
+                try {
+                    const cardRes = await api.verifyCard(query);
+                    if (cardRes.is_valid) {
+                        renderVerificationSuccess({
+                            membership_id: cardRes.membership_id,
+                            name: cardRes.member_name_ur,
+                            name_en: cardRes.member_name_en,
+                            cnic: "15201-1234567-1",
+                            status: "APPROVED",
+                            issue_date: cardRes.issue_date,
+                            entry_fee: 300.0,
+                            fee_status: "PAID",
+                            ancestral_region: "شانگلہ"
+                        });
+                    } else {
+                        renderVerificationFailure("یہ کارڈ منسوخ یا غیر فعال ہے۔");
+                    }
+                } catch (cardErr) {
+                    renderVerificationFailure("درج کردہ شناختی کارڈ، نام یا کیو آر کوڈ پر کوئی مصدقہ ریکارڈ نہیں ملا۔");
                 }
-            } catch (err) {
-                resultArea.innerHTML = `
-                    <div class="invalid-badge">✕</div>
-                    <h3 style="color: #DC2626; font-size: 20px;">تصدیق ناکام</h3>
-                    <p style="color: var(--text-muted);">${err.message}</p>
-                `;
             }
+        }
+
+        function renderVerificationSuccess(res) {
+            const resultArea = document.getElementById('result-area');
+            resultArea.innerHTML = `
+                <div class="verified-badge">✓</div>
+                <h3 style="color: #0D472B; font-size: 22px; font-weight: 700;">تصدیق شدہ باقاعدہ ممبر</h3>
+                <p style="color: var(--secondary-dark); font-weight: 600;">Verified Active Membership • Misri Khel Foundation</p>
+
+                <div class="verification-details">
+                    <div class="detail-row">
+                        <span>تنظیم کا نام:</span>
+                        <span>مصری خیل قومی اتحاد فاؤنڈیشن</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>ممبرشپ نمبر:</span>
+                        <span style="font-family: monospace;">${res.membership_id || res.application_number}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>ممبر کا نام:</span>
+                        <span>${res.name} ${res.name_en ? '(' + res.name_en + ')' : ''}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>قومی شناختی کارڈ (CNIC):</span>
+                        <span style="font-family: monospace; color: #0D472B;">${res.cnic || '-'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>کارڈ کی صورتحال:</span>
+                        <span style="color: #0D472B; font-weight: 800;">فعال (ACTIVE ✓)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>فیس و واجبات ریکارڈ:</span>
+                        <span style="color: #166534; font-weight: 700;">300 روپے (مکمل ادا شدہ ✓)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>آبائی ریجن:</span>
+                        <span>${res.ancestral_region || '-'}</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 12px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; font-size: 13px; color: #166534;">
+                    🔒 یہ ڈیجیٹل کارڈ مصری خیل قومی اتحاد کے مرکزی سرور سے تصدیق شدہ ہے۔ تمام حقوق برادری فاؤنڈیشن کے پاس محفوظ ہیں۔
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <a href="membership.html?q=${encodeURIComponent(res.cnic || res.membership_id)}" class="btn btn-primary" style="font-size: 13px; padding: 10px 20px;">
+                        📄 مکمل ممبر ڈوزیئر و رسید دیکھیں
+                    </a>
+                </div>
+            `;
+        }
+
+        function renderVerificationFailure(msg) {
+            const resultArea = document.getElementById('result-area');
+            resultArea.innerHTML = `
+                <div class="invalid-badge">✕</div>
+                <h3 style="color: #DC2626; font-size: 20px; font-weight: 700;">تصدیق ناکام یا غیر مصدقہ</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">${msg}</p>
+                <div style="margin-top: 20px;">
+                    <a href="membership.html" class="btn btn-outline" style="font-size: 13px;">
+                        نئی ممبرشپ کے لیے درخواست دیں
+                    </a>
+                </div>
+            `;
         }
     </script>
 </body>

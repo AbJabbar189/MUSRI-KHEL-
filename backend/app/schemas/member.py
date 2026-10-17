@@ -8,6 +8,7 @@ class ApplicationCreate(BaseModel):
     full_name_en: str = Field(..., min_length=2, max_length=150)
     father_name_ur: Optional[str] = None
     father_name_en: Optional[str] = None
+    cnic: Optional[str] = None
     mobile_number: str = Field(..., min_length=10, max_length=20)
     emergency_contact: Optional[str] = None
     email: Optional[str] = None
@@ -20,6 +21,13 @@ class ApplicationCreate(BaseModel):
     education_level: Optional[str] = None
     professional_category: Optional[str] = None
     declaration_accepted: bool = True
+    
+    # Financial Entry Fee Details
+    entry_fee: float = 300.0
+    fee_status: str = "PAID"
+    payment_method: Optional[str] = "EasyPaisa"
+    transaction_reference: Optional[str] = None
+    receipt_slip_path: Optional[str] = None
 
 class ApplicationReview(BaseModel):
     status: MembershipStatus
@@ -32,6 +40,7 @@ class ApplicationResponse(BaseModel):
     full_name_en: str
     father_name_ur: Optional[str] = None
     father_name_en: Optional[str] = None
+    cnic: Optional[str] = None
     mobile_number: str
     current_city: str
     current_area: str
@@ -39,6 +48,14 @@ class ApplicationResponse(BaseModel):
     ancestral_village: Optional[str] = None
     occupation: Optional[str] = None
     professional_category: Optional[str] = None
+    
+    # Financial details
+    entry_fee: float = 300.0
+    fee_status: str = "PAID"
+    payment_method: Optional[str] = "EasyPaisa"
+    transaction_reference: Optional[str] = None
+    receipt_slip_path: Optional[str] = None
+    
     status: MembershipStatus
     review_notes: Optional[str] = None
     created_at: Optional[datetime] = None
@@ -53,11 +70,19 @@ class MemberResponse(BaseModel):
     full_name_en: str
     father_name_ur: Optional[str] = None
     father_name_en: Optional[str] = None
+    cnic: Optional[str] = None
     mobile_number: str
     current_city: str
     current_area: str
     ancestral_region: str
     ancestral_village: Optional[str] = None
+    
+    # Financial details
+    entry_fee: float = 300.0
+    fee_status: str = "PAID"
+    payment_method: Optional[str] = "EasyPaisa"
+    transaction_reference: Optional[str] = None
+    receipt_slip_path: Optional[str] = None
     occupation: Optional[str] = None
     professional_category: Optional[str] = None
     status: MembershipStatus

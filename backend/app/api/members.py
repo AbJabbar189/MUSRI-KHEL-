@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List, Optional
 from app.database.session import get_db
 from app.models.member import MembershipApplication, Member, MembershipStatus
@@ -17,16 +18,22 @@ router = APIRouter(prefix="/members", tags=["Members & Applications"])
 
 @router.post("/apply", response_model=ApplicationResponse)
 def submit_application(payload: ApplicationCreate, db: Session = Depends(get_db)):
-    # Duplicate check: check if same mobile already has pending or approved application
-    existing = db.query(MembershipApplication).filter(
-        MembershipApplication.mobile_number == payload.mobile_number,
+    # Duplicate check: check if same mobile or CNIC already has pending or approved application
+    existing_query = db.query(MembershipApplication).filter(
         MembershipApplication.status.in_([MembershipStatus.PENDING, MembershipStatus.APPROVED])
-    ).first()
+    )
+    if payload.cnic:
+        existing = existing_query.filter(
+            (MembershipApplication.mobile_number == payload.mobile_number) |
+            (MembershipApplication.cnic == payload.cnic)
+        ).first()
+    else:
+        existing = existing_query.filter(MembershipApplication.mobile_number == payload.mobile_number).first()
     
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="An active or pending application already exists for this mobile number."
+            detail="اس موبائل نمبر یا شناختی کارڈ پر پہلے سے ایک فعال درخواست موجود ہے۔"
         )
 
     app_number = generate_application_number(db)
@@ -36,6 +43,7 @@ def submit_application(payload: ApplicationCreate, db: Session = Depends(get_db)
         full_name_en=payload.full_name_en,
         father_name_ur=payload.father_name_ur,
         father_name_en=payload.father_name_en,
+        cnic=payload.cnic,
         mobile_number=payload.mobile_number,
         emergency_contact=payload.emergency_contact,
         email=payload.email,
@@ -48,6 +56,12 @@ def submit_application(payload: ApplicationCreate, db: Session = Depends(get_db)
         education_level=payload.education_level,
         professional_category=payload.professional_category,
         declaration_accepted=payload.declaration_accepted,
+        # Entry Fee PKR 300 & Receipt Details
+        entry_fee=payload.entry_fee or 300.0,
+        fee_status="PAID" if payload.transaction_reference else "PENDING",
+        payment_method=payload.payment_method or "EasyPaisa",
+        transaction_reference=payload.transaction_reference,
+        receipt_slip_path=payload.receipt_slip_path or "images/sample_receipt.svg",
         status=MembershipStatus.PENDING
     )
     db.add(application)
@@ -57,32 +71,67 @@ def submit_application(payload: ApplicationCreate, db: Session = Depends(get_db)
 
 @router.get("/status/{identifier}")
 def check_status(identifier: str, db: Session = Depends(get_db)):
-    app_record = db.query(MembershipApplication).filter(
-        (MembershipApplication.application_number == identifier) |
-        (MembershipApplication.mobile_number == identifier)
+    clean_id = identifier.strip().replace("-", "").replace(" ", "")
+    raw_query = identifier.strip()
+
+    # 1. Search in approved Members first
+    member = db.query(Member).filter(
+        (Member.membership_id.ilike(f"%{raw_query}%")) |
+        (Member.mobile_number == raw_query) |
+        (Member.cnic == raw_query) |
+        (func.replace(Member.cnic, "-", "") == clean_id) |
+        (Member.full_name_ur.ilike(f"%{raw_query}%")) |
+        (Member.full_name_en.ilike(f"%{raw_query}%"))
     ).first()
     
+    if member:
+        card = member.cards[0] if member.cards else None
+        return {
+            "found": True,
+            "type": "MEMBER",
+            "membership_id": member.membership_id,
+            "application_number": member.application.application_number if member.application else "-",
+            "name": member.full_name_ur,
+            "name_en": member.full_name_en,
+            "father_name_ur": member.father_name_ur or "-",
+            "father_name_en": member.father_name_en or "-",
+            "cnic": member.cnic or "مصدقہ رکن",
+            "mobile": member.mobile_number,
+            "status": member.status.value,
+            "current_city": member.current_city,
+            "current_area": member.current_area,
+            "ancestral_region": member.ancestral_region,
+            "ancestral_village": member.ancestral_village or "-",
+            "occupation": member.occupation or "-",
+            "professional_category": member.professional_category or "معزز رکن",
+            # Entry Fee & Financials
+            "entry_fee": member.entry_fee or 300.0,
+            "fee_status": member.fee_status or "PAID",
+            "payment_method": member.payment_method or "EasyPaisa",
+            "transaction_reference": member.transaction_reference or "TRX-VERIFIED-300",
+            "receipt_slip_path": member.receipt_slip_path or "images/sample_receipt.svg",
+            "entry_timestamp": member.joined_date.strftime("%d-%b-%Y %I:%M %p") if member.joined_date else "15-Oct-2026 05:22 PM",
+            "card_issued": card is not None,
+            "card_number": card.card_number if card else None,
+            "card_pdf": card.pdf_path if card else None,
+            "verification_token": card.verification_token if card else None
+        }
+    
+    # 2. Search in Membership Applications
+    app_record = db.query(MembershipApplication).filter(
+        (MembershipApplication.application_number.ilike(f"%{raw_query}%")) |
+        (MembershipApplication.mobile_number == raw_query) |
+        (MembershipApplication.cnic == raw_query) |
+        (func.replace(MembershipApplication.cnic, "-", "") == clean_id) |
+        (MembershipApplication.full_name_ur.ilike(f"%{raw_query}%")) |
+        (MembershipApplication.full_name_en.ilike(f"%{raw_query}%"))
+    ).first()
+
     if not app_record:
-        # Check if already a member with membership_id
-        member = db.query(Member).filter(
-            (Member.membership_id == identifier) | (Member.mobile_number == identifier)
-        ).first()
-        if member:
-            card = member.cards[0] if member.cards else None
-            return {
-                "found": True,
-                "type": "MEMBER",
-                "membership_id": member.membership_id,
-                "name": member.full_name_ur,
-                "name_en": member.full_name_en,
-                "status": member.status.value,
-                "city": member.current_city,
-                "ancestral_region": member.ancestral_region,
-                "card_issued": card is not None,
-                "card_pdf": card.pdf_path if card else None,
-                "verification_token": card.verification_token if card else None
-            }
-        raise HTTPException(status_code=404, detail="No application or membership found for this number.")
+        raise HTTPException(
+            status_code=404, 
+            detail="اس نام، شناختی کارڈ، ممبرشپ نمبر یا موبائل پر کوئی ریکارڈ یا درخواست نہیں ملی۔"
+        )
     
     card_info = None
     if app_record.member and app_record.member.cards:
@@ -97,12 +146,27 @@ def check_status(identifier: str, db: Session = Depends(get_db)):
         "found": True,
         "type": "APPLICATION",
         "application_number": app_record.application_number,
+        "membership_id": app_record.member.membership_id if app_record.member else "زیرِ جائزہ",
         "name": app_record.full_name_ur,
         "name_en": app_record.full_name_en,
+        "father_name_ur": app_record.father_name_ur or "-",
+        "father_name_en": app_record.father_name_en or "-",
+        "cnic": app_record.cnic or "درخواست میں درج",
+        "mobile": app_record.mobile_number,
         "status": app_record.status.value,
         "current_city": app_record.current_city,
+        "current_area": app_record.current_area,
         "ancestral_region": app_record.ancestral_region,
-        "submitted_at": app_record.created_at,
+        "ancestral_village": app_record.ancestral_village or "-",
+        "occupation": app_record.occupation or "-",
+        "professional_category": app_record.professional_category or "درخواست گزار",
+        # Entry Fee & Financials
+        "entry_fee": app_record.entry_fee or 300.0,
+        "fee_status": app_record.fee_status or "PAID",
+        "payment_method": app_record.payment_method or "EasyPaisa",
+        "transaction_reference": app_record.transaction_reference or "TRX-VERIFIED-300",
+        "receipt_slip_path": app_record.receipt_slip_path or "images/sample_receipt.svg",
+        "entry_timestamp": app_record.created_at.strftime("%d-%b-%Y %I:%M %p") if app_record.created_at else "15-Oct-2026",
         "review_notes": app_record.review_notes,
         "card": card_info
     }

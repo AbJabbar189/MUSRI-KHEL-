@@ -95,6 +95,17 @@
                 <a href="membership.html#track-status" class="btn btn-primary" data-i18n="btn_track">درخواست کی صورتحال دیکھیں</a>
                 <a href="verify.html" class="btn btn-outline" style="border-color: #fff; color: #fff;" data-i18n="btn_verify_hero">ڈیجیٹل کارڈ تصدیق کریں</a>
             </div>
+
+            <!-- Global Member & CNIC Search Bar -->
+            <div class="global-search-container">
+                <input type="text" id="homeSearchInput" class="global-search-input" placeholder="برادری رکن کا نام یا قومی شناختی کارڈ نمبر (CNIC) درج کریں..." onkeypress="if(event.key==='Enter') executeHomeSearch()">
+                <button class="btn btn-gold global-search-btn" onclick="executeHomeSearch()">
+                    🔍 ریکارڈ تلاش کریں
+                </button>
+            </div>
+            <div style="margin-top: 10px; font-size: 12.5px; color: #E2E8F0;">
+                💡 مصدقہ رکن ریکارڈ چیک کریں: <a href="membership.html?q=15201-1234567-1#track-status" style="color: #D4AF37; font-weight: 700; text-decoration: underline;">15201-1234567-1</a> یا <a href="membership.html?q=عمران خان#track-status" style="color: #D4AF37; font-weight: 700; text-decoration: underline;">عمران خان</a>
+            </div>
         </div>
     </section>
 
@@ -118,6 +129,27 @@
                     <div class="stat-number">70+</div>
                     <div class="stat-label" data-i18n="stat_serving">سالہ تاریخی خدمت</div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Blood Donors & Welfare Relief Banner -->
+    <section style="background: linear-gradient(135deg, #072718 0%, #0D472B 100%); color: #fff; padding: 25px 0; border-top: 2px solid #D4AF37; border-bottom: 2px solid #D4AF37;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="font-size: 32px; background: rgba(220, 38, 38, 0.2); border: 2px solid #ef4444; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;">🩸</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px; color: #fff;">ہنگامی بلڈ ڈونر و فلاحی ایمرجنسی سروس</h3>
+                    <p style="margin: 3px 0 0 0; font-size: 13px; color: #E2E8F0;">مصری خیل برادری کے رجسٹرڈ خون کے عطیہ دہندگان اور راشن و طبی امداد برائے ضرورت مند خاندان</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="membership.html" class="btn btn-gold" style="font-size: 13px; padding: 8px 18px;">
+                    بلڈ ڈونر کے طور پر اندراج کریں
+                </a>
+                <a href="contact.html" class="btn btn-outline" style="border-color: #fff; color: #fff; font-size: 13px; padding: 8px 18px;">
+                    ایمرجنسی رابطہ (021-32768327)
+                </a>
             </div>
         </div>
     </section>
@@ -336,4 +368,14 @@
  <script src="i18n.js"></script>
 <script src="api.js"></script>
 <script src="app.js"></script>
+<script>
+    function executeHomeSearch() {
+        const val = document.getElementById('homeSearchInput').value.trim();
+        if (val) {
+            window.location.href = `membership.html?q=${encodeURIComponent(val)}#track-status`;
+        } else {
+            window.location.href = 'membership.html#track-status';
+        }
+    }
+</script>
 </html>

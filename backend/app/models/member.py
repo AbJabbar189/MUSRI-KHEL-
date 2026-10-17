@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, Enum as SQLEnum, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, Text, Boolean, DateTime, Enum as SQLEnum, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
@@ -42,6 +42,14 @@ class MembershipApplication(Base):
     education_level = Column(String(100), nullable=True)
     professional_category = Column(String(100), nullable=True)
     
+    # CNIC & Financial Entry Fee
+    cnic = Column(String(25), index=True, nullable=True)
+    entry_fee = Column(Float, default=300.0, nullable=False)
+    fee_status = Column(String(50), default="PAID", nullable=False)
+    payment_method = Column(String(50), default="EasyPaisa", nullable=True)
+    transaction_reference = Column(String(100), nullable=True)
+    receipt_slip_path = Column(String(255), nullable=True)
+
     # Documents & Meta
     photo_path = Column(String(255), nullable=True)
     declaration_accepted = Column(Boolean, default=True)
@@ -69,11 +77,19 @@ class Member(Base):
     full_name_en = Column(String(150), nullable=False)
     father_name_ur = Column(String(150), nullable=True)
     father_name_en = Column(String(150), nullable=True)
+    cnic = Column(String(25), index=True, nullable=True)
     mobile_number = Column(String(20), index=True, nullable=False)
     current_city = Column(String(100), nullable=False)
     current_area = Column(String(150), nullable=False)
     ancestral_region = Column(String(100), nullable=False)
     ancestral_village = Column(String(150), nullable=True)
+    
+    # Financial details
+    entry_fee = Column(Float, default=300.0, nullable=False)
+    fee_status = Column(String(50), default="PAID", nullable=False)
+    payment_method = Column(String(50), default="EasyPaisa", nullable=True)
+    transaction_reference = Column(String(100), nullable=True)
+    receipt_slip_path = Column(String(255), nullable=True)
     
     occupation = Column(String(150), nullable=True)
     professional_category = Column(String(100), nullable=True)

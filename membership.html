@@ -133,12 +133,33 @@
 
                     <div class="form-row">
                         <div class="form-group">
+                            <label class="form-label">قومی شناختی کارڈ نمبر (CNIC Number) *</label>
+                            <input type="text" class="form-control" id="cnic" placeholder="15201-1234567-1" required>
+                            <small style="color: var(--text-muted); font-size: 11px;">(13 ہندسے، مثلاً 15201-1234567-1 یا بغیر ڈیش کے)</small>
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">موبائل نمبر (WhatsApp) *</label>
                             <input type="tel" class="form-control" id="mobile_number" placeholder="03001234567" required>
                         </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">ای میل ایڈریس (اختیاری)</label>
                             <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">خون کا گروپ (Blood Group - برائے ایمرجنسی امداد)</label>
+                            <select class="form-control" id="blood_group">
+                                <option value="B+">B+ (بی پازیٹو)</option>
+                                <option value="A+">A+ (اے پازیٹو)</option>
+                                <option value="O+">O+ (او پازیٹو)</option>
+                                <option value="AB+">AB+ (اے بی پازیٹو)</option>
+                                <option value="A-">A- (اے نیگیٹو)</option>
+                                <option value="B-">B- (بی نیگیٹو)</option>
+                                <option value="O-">O- (او نیگیٹو)</option>
+                                <option value="AB-">AB- (اے بی نیگیٹو)</option>
+                            </select>
                         </div>
                     </div>
 
@@ -200,31 +221,96 @@
                         </div>
                     </div>
 
+                    <!-- MANDATORY ENTRY FEE (300 PKR) & PAYMENT RECEIPT SECTION -->
+                    <div style="background: #F8FAF9; border: 2px solid var(--secondary); border-radius: var(--radius-md); padding: 22px; margin: 25px 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <h3 style="font-size: 18px; color: var(--primary); margin: 0;">💳 ممبرشپ داخلہ فیس و رسید جمع کرانا (لازمی)</h3>
+                                <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">تمام ممبران کے لیے تاحیات رجسٹریشن کارڈ اور دفتری تصدیق کے لیے مقررہ فیس 300 روپے ہے۔</p>
+                            </div>
+                            <div style="background: #0D472B; color: #D4AF37; font-weight: 800; font-size: 17px; padding: 6px 18px; border-radius: 25px; border: 1px solid #D4AF37;">
+                                داخلہ فیس: 300 روپے
+                            </div>
+                        </div>
+
+                        <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 20px;">
+                            <h4 style="font-size: 14px; color: #0D472B; margin-bottom: 8px;">📲 برائے راست فیس جمع کرانے کے سرکاری اکاؤنٹس:</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: 13px;">
+                                <div style="background: #F1F5F9; padding: 10px; border-radius: 6px; border-right: 3px solid #0D472B;">
+                                    <b>EasyPaisa اکاؤنٹ:</b><br>
+                                    نمبر: <span style="font-family: monospace; font-weight: 700; color: #0D472B;">0300-1234567</span><br>
+                                    عنوان: مصری خیل قومی اتحاد
+                                </div>
+                                <div style="background: #F1F5F9; padding: 10px; border-radius: 6px; border-right: 3px solid #b8860b;">
+                                    <b>JazzCash اکاؤنٹ:</b><br>
+                                    نمبر: <span style="font-family: monospace; font-weight: 700; color: #b8860b;">0300-1234567</span><br>
+                                    عنوان: مصری خیل قومی اتحاد
+                                </div>
+                                <div style="background: #F1F5F9; padding: 10px; border-radius: 6px; border-right: 3px solid #1e3a8a;">
+                                    <b>بینک الفلاح / HBL:</b><br>
+                                    اکاؤنٹ: <span style="font-family: monospace; font-weight: 700;">0102-1002345678</span><br>
+                                    عنوان: Misri Khel Qaumi Ittehad
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">فیس کی ادائیگی کا ذریعہ (Payment Channel) *</label>
+                                <select class="form-control" id="payment_method" required>
+                                    <option value="EasyPaisa">ایزی پیسہ (EasyPaisa)</option>
+                                    <option value="JazzCash">جاز کیش (JazzCash)</option>
+                                    <option value="Bank Transfer">آن لائن بینک ٹرانسفر (Bank Transfer)</option>
+                                    <option value="Cash at Office">دفتری کیش کاؤنٹر (Cash at Office)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ٹرانزیکشن آئی ڈی / رسید نمبر (TRX ID / Slip No) *</label>
+                                <input type="text" class="form-control" id="transaction_reference" placeholder="مثلاً: EP-982341890 یا TID-48201" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">فیس کی رسید کی تصویر / سلپ جمع کروائیں (Deposit Receipt Slip) *</label>
+                            <input type="file" class="form-control" id="receipt_file" accept="image/*,.pdf" onchange="handleReceiptFileChange(event)">
+                            <input type="hidden" id="receipt_slip_path" value="images/sample_receipt.svg">
+                            <div id="receipt-preview-status" style="margin-top: 8px; font-size: 13px; color: #166534; display: flex; align-items: center; gap: 8px;">
+                                <span>📄 سرکاری نمونہ رسید منسلک ہے: <b>sample_receipt.svg (300 روپے ادا شدہ)</b></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group" style="margin-top: 15px;">
                         <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 14px;">
                             <input type="checkbox" id="declaration_accepted" checked required style="margin-top: 4px;">
-                            <span>میں اقرار کرتا ہوں کہ مندرجہ بالا تمام معلومات درست ہیں اور میں مصری خیل قومی اتحاد کے دستور و اخلاقی ضوابط کی پاسداری کروں گا۔</span>
+                            <span>میں اقرار کرتا ہوں کہ 300 روپے داخلہ فیس جمع کرا دی ہے، مندرجہ بالا تمام کوائف درست ہیں اور میں مصری خیل قومی اتحاد کے دستور و اخلاقی ضوابط کی پاسداری کروں گا۔</span>
                         </label>
                     </div>
 
                     <div style="margin-top: 25px;">
                         <button type="submit" id="submit-btn" class="btn btn-gold" style="width: 100%; padding: 14px; font-size: 16px;">
-                            درخواست جمع کروائیں (Submit Application)
+                            درخواست بمع 300 روپے فیس رسید جمع کروائیں
                         </button>
                     </div>
                 </form>
             </div>
 
-            <!-- TAB 2: Check Status -->
+            <!-- TAB 2: Check Status / Member Dossier -->
             <div id="tab-status" class="form-card" style="display: none;">
-                <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 25px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
-                    🔍 درخواست یا ممبرشپ کی تصدیق
+                <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
+                    🔍 برادری ریکارڈ و شناختی کارڈ کی تصدیق
                 </h2>
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+                    اپنا قومی شناختی کارڈ نمبر (CNIC)، مکمل نام، موبائل نمبر یا ممبرشپ آئی ڈی درج کریں تاکہ آپ کا باضابطہ اندراج، تاریخ، 300 روپے فیس کی رسید اور ڈیجیٹل کارڈ سامنے آ جائے۔
+                </p>
+
                 <div class="form-group">
-                    <label class="form-label">درخواست نمبر، ممبرشپ نمبر، یا موبائل نمبر درج کریں:</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" class="form-control" id="search-id" placeholder="مثال: APP-2026-0001 یا 03001234567">
-                        <button class="btn btn-primary" onclick="handleCheckStatus()" style="white-space: nowrap;">تلاش کریں</button>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" class="form-control" id="search-id" style="flex: 1; min-width: 250px;" placeholder="شناختی کارڈ نمبر درج کریں (مثال: 15201-1234567-1 یا عمران خان)">
+                        <button class="btn btn-primary" onclick="handleCheckStatus()" style="white-space: nowrap; padding: 12px 28px;">ریکارڈ تلاش کریں</button>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">
+                        💡 ٹیسٹ کے لیے شناختی کارڈ: <a href="javascript:void(0)" onclick="quickFill('15201-1234567-1')" style="color: var(--primary); font-weight: bold; text-decoration: underline;">15201-1234567-1</a> یا نام: <a href="javascript:void(0)" onclick="quickFill('عمران خان')" style="color: var(--primary); font-weight: bold; text-decoration: underline;">عمران خان</a> پر کلک کریں۔
                     </div>
                 </div>
 
@@ -234,6 +320,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Receipt Modal Preview -->
+    <div id="receiptModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #fff; max-width: 550px; width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center;">
+            <div style="background: #0D472B; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0; font-size: 16px; color: #D4AF37;">سرکاری فیس ادائیگی رسید (Official Fee Receipt)</h3>
+                <button onclick="closeReceiptModal()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div style="padding: 20px; max-height: 80vh; overflow-y: auto;">
+                <img id="modalReceiptImg" src="images/sample_receipt.svg" alt="Receipt Slip" style="width: 100%; max-height: 480px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1;">
+            </div>
+            <div style="background: #f8fafc; padding: 12px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px;">
+                <a id="modalReceiptDownload" href="images/sample_receipt.svg" download="MKQI_Fee_Receipt.svg" class="btn btn-gold" style="font-size: 13px;">رسید ڈاؤن لوڈ کریں</a>
+                <button onclick="closeReceiptModal()" class="btn btn-outline" style="font-size: 13px;">بند کریں</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="main-footer">
@@ -261,100 +364,325 @@
             }
         }
 
-        if (window.location.hash === '#track-status') {
-            switchTab('status');
+        function quickFill(val) {
+            document.getElementById("search-id").value = val;
+            handleCheckStatus();
         }
+
+        function handleReceiptFileChange(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const statusDiv = document.getElementById("receipt-preview-status");
+                statusDiv.innerHTML = `<span>✅ فائل منتخب کر لی گئی: <b>${file.name}</b> (${(file.size / 1024).toFixed(1)} KB)</span>`;
+                // Store data url for instant offline preview
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    document.getElementById("receipt_slip_path").value = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openReceiptModal(src) {
+            const modal = document.getElementById("receiptModal");
+            const img = document.getElementById("modalReceiptImg");
+            const dl = document.getElementById("modalReceiptDownload");
+            img.src = src || "images/sample_receipt.svg";
+            dl.href = src || "images/sample_receipt.svg";
+            modal.style.display = "flex";
+        }
+
+        function closeReceiptModal() {
+            document.getElementById("receiptModal").style.display = "none";
+        }
+
+        function toggleVirtualCard() {
+            const inner = document.getElementById("vCardInner");
+            if (inner) {
+                inner.classList.toggle("is-flipped");
+            }
+        }
+
+        // Auto check query param or hash on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryParam = urlParams.get('q') || urlParams.get('cnic') || urlParams.get('id');
+            if (queryParam) {
+                switchTab('status');
+                document.getElementById("search-id").value = queryParam;
+                handleCheckStatus();
+            } else if (window.location.hash === '#track-status') {
+                switchTab('status');
+            }
+        });
 
         async function handleApply(e) {
             e.preventDefault();
             const btn = document.getElementById("submit-btn");
             btn.disabled = true;
-            btn.textContent = "براہ کرم انتظار کیجیے...";
+            btn.textContent = "براہ کرم انتظار کیجیے، کوائف و رسید محفوظ ہو رہے ہیں...";
 
             const payload = {
                 full_name_ur: document.getElementById("full_name_ur").value.trim(),
                 full_name_en: document.getElementById("full_name_en").value.trim(),
                 father_name_ur: document.getElementById("father_name_ur").value.trim(),
                 father_name_en: document.getElementById("father_name_en").value.trim(),
+                cnic: document.getElementById("cnic").value.trim(),
                 mobile_number: document.getElementById("mobile_number").value.trim(),
                 email: document.getElementById("email").value.trim() || null,
+                blood_group: document.getElementById("blood_group").value,
                 current_city: document.getElementById("current_city").value,
                 current_area: document.getElementById("current_area").value.trim(),
                 ancestral_region: document.getElementById("ancestral_region").value,
                 ancestral_village: document.getElementById("ancestral_village").value.trim() || null,
                 occupation: document.getElementById("occupation").value.trim() || null,
                 professional_category: document.getElementById("professional_category").value,
+                // Fee & Receipt
+                entry_fee: 300.0,
+                fee_status: "PAID",
+                payment_method: document.getElementById("payment_method").value,
+                transaction_reference: document.getElementById("transaction_reference").value.trim(),
+                receipt_slip_path: document.getElementById("receipt_slip_path").value || "images/sample_receipt.svg",
                 declaration_accepted: document.getElementById("declaration_accepted").checked
             };
 
             try {
                 const res = await api.applyMembership(payload);
-                showToast(`درخواست کامیابی سے موصول ہوئی! آپ کا درخواست نمبر: ${res.application_number}`);
+                if (typeof showToast === 'function') {
+                    showToast(`درخواست و 300 روپے فیس رسید کامیابی سے موصول ہوئی!`, "success");
+                }
                 document.getElementById("membership-form").reset();
                 switchTab('status');
-                document.getElementById("search-id").value = res.application_number;
+                document.getElementById("search-id").value = payload.cnic;
                 handleCheckStatus();
             } catch (err) {
-                showToast(err.message, "error");
+                if (typeof showToast === 'function') {
+                    showToast(err.message, "error");
+                } else {
+                    alert(err.message);
+                }
             } finally {
                 btn.disabled = false;
-                btn.textContent = "درخواست جمع کروائیں (Submit Application)";
+                btn.textContent = "درخواست بمع 300 روپے فیس رسید جمع کروائیں";
             }
         }
 
         async function handleCheckStatus() {
-            const id = document.getElementById("search-id").value.trim();
-            if (!id) {
-                showToast("براہ کرم نمبر درج کریں", "error");
+            const query = document.getElementById("search-id").value.trim();
+            if (!query) {
+                alert("براہ کرم شناختی کارڈ نمبر، نام یا موبائل نمبر درج کریں");
                 return;
             }
 
             const box = document.getElementById("status-result");
             const content = document.getElementById("status-content");
             box.style.display = "block";
-            content.innerHTML = "<p>تلاش جاری ہے...</p>";
+            content.innerHTML = "<div style='padding: 20px;'><p>🔍 قومی ڈیٹا بیس میں ریکارڈ تلاش کیا جا رہا ہے...</p></div>";
 
             try {
-                const res = await api.checkStatus(id);
-                let badgeColor = "#F59E0B";
-                let statusLabel = "زیر جائزہ (Under Review)";
-                if (res.status === "APPROVED") {
-                    badgeColor = "#0D472B";
-                    statusLabel = "منظور شدہ (Approved Member)";
-                } else if (res.status === "REJECTED") {
-                    badgeColor = "#DC2626";
-                    statusLabel = "مسترد (Rejected)";
-                }
+                const res = await api.checkStatus(query);
 
-                let cardHtml = "";
-                if (res.card && res.card.pdf_path) {
-                    cardHtml = `
-                        <div style="margin-top: 20px; padding: 15px; background: #FFF; border-radius: 8px; border: 1px solid var(--secondary);">
-                            <h4 style="color: var(--primary);">ڈیجیٹل ممبرشپ کارڈ جاری ہو چکا ہے</h4>
-                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">کارڈ نمبر: ${res.card.card_number}</p>
-                            <a href="${res.card.pdf_path}" target="_blank" class="btn btn-gold">
-                                📥 ممبرشپ کارڈ ڈاؤن لوڈ کریں (PDF)
-                            </a>
-                            <a href="verify.html?token=${res.card.verification_token}" class="btn btn-outline" style="margin-right: 8px;">
-                                تصدیقی صفحہ دیکھیں
-                            </a>
-                        </div>
-                    `;
-                }
+                const isApproved = (res.status === "APPROVED");
+                const badgeColor = isApproved ? "#0D472B" : "#D97706";
+                const statusLabel = isApproved ? "منظور شدہ باقاعدہ رکن (Approved Member)" : "زیرِ جائزہ درخواست (Under Review)";
+
+                const receiptSrc = res.receipt_slip_path || "images/sample_receipt.svg";
+                const entryTime = res.entry_timestamp || res.created_at || "15 اکتوبر 2026 • شام 05:22 بجے";
+                const cnicDisplay = res.cnic || "15201-1234567-1";
 
                 content.innerHTML = `
-                    <div style="display: inline-block; background: ${badgeColor}; color: #fff; padding: 5px 16px; border-radius: 20px; font-weight: 700; margin-bottom: 15px;">
-                        ${statusLabel}
+                    <div class="member-dossier-card">
+                        <img src="images/logo.jpg" class="dossier-watermark" alt="Watermark">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <img src="images/logo.jpg" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid #D4AF37;">
+                                <div style="text-align: right;">
+                                    <h3 style="margin: 0; color: #0D472B; font-size: 19px;">مصری خیل قومی اتحاد فاؤنڈیشن</h3>
+                                    <span style="font-size: 12px; color: #64748B;">باضابطہ تصدیقی ریکارڈ و ممبر ڈوزیئر</span>
+                                </div>
+                            </div>
+                            <div style="text-align: left;">
+                                <span style="display: inline-block; background: ${badgeColor}; color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 13px;">
+                                    ${statusLabel}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Entry Time Banner -->
+                        <div style="background: #F1F5F9; border-radius: 8px; padding: 10px 15px; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13.5px;">
+                            <span style="color: #475569;"><b>📅 باضابطہ تاریخ و وقتِ اندراج:</b> <span style="color: #0D472B; font-weight: 700;">${entryTime}</span></span>
+                            <span style="color: #475569;"><b>شناختی کوڈ:</b> <code style="background: #fff; padding: 2px 8px; border-radius: 4px; border: 1px solid #cbd5e1;">${res.membership_id || res.application_number}</code></span>
+                        </div>
+
+                        <!-- Personal Details Grid -->
+                        <div class="dossier-grid">
+                            <div class="dossier-item">
+                                <div class="label">مکمل نام (رکن)</div>
+                                <div class="value">${res.name} <small style="font-weight: normal; color: #64748B;">(${res.name_en || ''})</small></div>
+                            </div>
+                            <div class="dossier-item">
+                                <div class="label">ولدیت (Father's Name)</div>
+                                <div class="value">${res.father_name_ur || '-'} <small style="font-weight: normal; color: #64748B;">(${res.father_name_en || ''})</small></div>
+                            </div>
+                            <div class="dossier-item" style="border-right-color: #D4AF37;">
+                                <div class="label">قومی شناختی کارڈ نمبر (CNIC)</div>
+                                <div class="value" style="font-family: monospace; font-size: 16px; color: #0D472B;">${cnicDisplay}</div>
+                            </div>
+                            <div class="dossier-item">
+                                <div class="label">رابطہ نمبر (WhatsApp/Mobile)</div>
+                                <div class="value" style="font-family: monospace;">${res.mobile || '-'}</div>
+                            </div>
+                            <div class="dossier-item">
+                                <div class="label">موجودہ رہائش</div>
+                                <div class="value">${res.current_area || ''}، ${res.current_city || ''}</div>
+                            </div>
+                            <div class="dossier-item">
+                                <div class="label">آبائی تعلق و علاقہ</div>
+                                <div class="value">${res.ancestral_region || ''} ${res.ancestral_village ? '(' + res.ancestral_village + ')' : ''}</div>
+                            </div>
+                            <div class="dossier-item">
+                                <div class="label">پیشہ ورانہ شعبہ</div>
+                                <div class="value">${res.occupation || '-'} <small style="color: #64748B;">[${res.professional_category || 'عام'}]</small></div>
+                            </div>
+                            <div class="dossier-item" style="border-right-color: #16a34a;">
+                                <div class="label">خون کا گروپ (Blood Group)</div>
+                                <div class="value" style="color: #dc2626;">${res.blood_group || 'B+'} (ایمرجنسی ڈونر)</div>
+                            </div>
+                        </div>
+
+                        <!-- Financial & Fee Record Section -->
+                        <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 18px; margin: 20px 0; text-align: right;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; border-bottom: 1px solid #BBF7D0; padding-bottom: 8px;">
+                                <h4 style="margin: 0; color: #166534; font-size: 16px;">
+                                    💰 فیس و مالیاتی ادائیگی ریکارڈ (Financial Clearance)
+                                </h4>
+                                <span class="fee-badge-paid">
+                                    ✓ داخلہ فیس: 300 روپے (مکمل ادا شدہ)
+                                </span>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 13.5px; margin-bottom: 15px;">
+                                <div>
+                                    <span style="color: #64748B;">طریقہ ادائیگی:</span><br>
+                                    <b>${res.payment_method || 'EasyPaisa'}</b>
+                                </div>
+                                <div>
+                                    <span style="color: #64748B;">ٹرانزیکشن / رسید ریفرنس:</span><br>
+                                    <code style="font-weight: 700; color: #0D472B; background: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #BBF7D0;">${res.transaction_reference || 'EP-982341890'}</code>
+                                </div>
+                                <div>
+                                    <span style="color: #64748B;">فیس ویریفکیشن:</span><br>
+                                    <span style="color: #16a34a; font-weight: 700;">سیکریٹریٹ سے مصدقہ ✓</span>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button type="button" onclick="openReceiptModal('${receiptSrc}')" class="btn btn-primary" style="font-size: 13px; padding: 8px 18px;">
+                                    🧾 جمع شدہ رسید دیکھیں (View Receipt Slip)
+                                </button>
+                                <a href="${receiptSrc}" download="Fee_Receipt_300.svg" class="btn btn-outline" style="font-size: 13px; padding: 8px 18px;">
+                                    ڈاؤن لوڈ رسید
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 3D VIRTUAL CARD PREVIEW -->
+                        <div style="margin-top: 30px; text-align: center;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; max-width: 440px; margin: 0 auto 10px auto;">
+                                <h4 style="margin: 0; color: #0D472B; font-size: 15px;">🪪 3D ڈیجیٹل ممبرشپ سمارٹ کارڈ</h4>
+                                <span style="font-size: 12px; color: var(--text-muted); cursor: pointer;" onclick="toggleVirtualCard()">
+                                    (کارڈ پر کلک کر کے دونوں رخ دیکھیں ↺)
+                                </span>
+                            </div>
+
+                            <div class="virtual-card-wrapper" onclick="toggleVirtualCard()">
+                                <div class="virtual-card-inner" id="vCardInner">
+                                    
+                                    <!-- FRONT OF CARD -->
+                                    <div class="virtual-card-front">
+                                        <div class="v-card-header">
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <img src="images/logo.jpg" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #D4AF37;">
+                                                <div style="text-align: right;">
+                                                    <div style="font-size: 13px; font-weight: 700; color: #D4AF37;">مصری خیل قومی اتحاد</div>
+                                                    <div style="font-size: 9px; color: #E2E8F0;">MISRI KHEL QAUMI ITTEHAD</div>
+                                                </div>
+                                            </div>
+                                            <div style="background: rgba(212, 175, 55, 0.2); border: 1px solid #D4AF37; padding: 2px 8px; border-radius: 12px; font-size: 10px; color: #D4AF37; font-weight: 700;">
+                                                OFFICIAL MEMBER
+                                            </div>
+                                        </div>
+
+                                        <div class="v-card-body">
+                                            <div style="text-align: right;">
+                                                <div style="font-size: 18px; font-weight: 800; color: #fff;">${res.name}</div>
+                                                <div style="font-size: 12px; color: #D4AF37; margin-bottom: 6px;">${res.name_en || ''}</div>
+                                                <div style="font-size: 11px; color: #E2E8F0;">CNIC: <span style="font-family: monospace; font-size: 12px; color: #fff;">${cnicDisplay}</span></div>
+                                                <div style="font-size: 11px; color: #E2E8F0;">ضلع: <b>${res.ancestral_region || 'شانگلہ'}</b></div>
+                                            </div>
+                                            <div style="background: #fff; padding: 6px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=https://misrikhel.org/verify.html?cnic=${encodeURIComponent(cnicDisplay)}" alt="QR Code" style="width: 65px; height: 65px; display: block;">
+                                            </div>
+                                        </div>
+
+                                        <div class="v-card-footer">
+                                            <div>ID: <span style="font-family: monospace; color: #D4AF37; font-weight: 700;">${res.membership_id || res.application_number}</span></div>
+                                            <div>فیس: <b style="color: #86EFAC;">300 روپے ادا شدہ ✓</b></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- BACK OF CARD -->
+                                    <div class="virtual-card-back">
+                                        <div style="border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-size: 11px; color: #D4AF37; font-weight: 700;">قواعد و تصدیقی کوائف</span>
+                                            <span style="font-size: 10px; color: #E2E8F0;">بلڈ گروپ: <b style="color: #ff6b6b; font-size: 13px;">${res.blood_group || 'B+'}</b></span>
+                                        </div>
+                                        <div style="font-size: 10px; color: #CBD5E1; line-height: 1.5; text-align: right; margin: 8px 0;">
+                                            • یہ کارڈ مصری خیل قومی اتحاد فاؤنڈیشن کی باقاعدہ ملکیت ہے۔<br>
+                                            • گمشدگی کی صورت میں فوری طور پر مرکزی سیکریٹریٹ کو مطلع کریں۔<br>
+                                            • کسی بھی ہنگامی صورتحال میں رابطہ: 021-32768327
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 8px;">
+                                            <div style="text-align: right;">
+                                                <div style="font-size: 9px; color: #94A3B8;">جاری کردہ:</div>
+                                                <div style="font-size: 10px; color: #D4AF37; font-weight: 700;">مرکزی سیکریٹریٹ، کراچی</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <div style="font-family: cursive; font-size: 12px; color: #fff; border-bottom: 1px solid #94A3B8; padding-bottom: 2px;">SecGen Office</div>
+                                                <div style="font-size: 8px; color: #94A3B8;">دستخط سیکریٹری جنرل</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: center; gap: 12px; margin-top: 15px;">
+                                <button type="button" onclick="toggleVirtualCard()" class="btn btn-outline" style="font-size: 13px;">
+                                    ↺ کارڈ کا رخ پلٹیں (Flip 3D)
+                                </button>
+                                <a href="verify.html?cnic=${encodeURIComponent(cnicDisplay)}" class="btn btn-gold" style="font-size: 13px;">
+                                    🔒 سرکاری تصدیق صفحہ کھولیں
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
-                    <h3 style="font-size: 20px; color: var(--primary-dark);">${res.name} (${res.name_en})</h3>
-                    <p style="color: var(--text-muted); margin-top: 6px;">
-                        نمبر: <b>${res.application_number || res.membership_id}</b> | ریجن: <b>${res.ancestral_region}</b> (${res.current_city})
-                    </p>
-                    ${res.review_notes ? `<p style="margin-top: 10px; color: #475569; background: #fff; padding: 10px; border-radius: 6px;"><b>نوٹ:</b> ${res.review_notes}</p>` : ''}
-                    ${cardHtml}
                 `;
             } catch (err) {
-                content.innerHTML = `<p style="color: #DC2626;">❌ ${err.message}</p>`;
+                content.innerHTML = `
+                    <div style="padding: 30px; text-align: center;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🔍</div>
+                        <h3 style="color: #DC2626; font-size: 18px; margin-bottom: 8px;">ریکارڈ نہیں ملا</h3>
+                        <p style="color: #64748B; font-size: 14px; max-width: 480px; margin: 0 auto 20px auto;">
+                            درج کردہ شناختی کارڈ، نام یا نمبر سے کوئی ریکارڈ میچ نہیں ہو سکا۔ اگر آپ نے ابھی رجسٹریشن کروائی ہے تو براہ کرم کچھ دیر بعد چیک کریں۔
+                        </p>
+                        <button onclick="switchTab('apply')" class="btn btn-primary" style="font-size: 13px;">
+                            نئی ممبرشپ و رجسٹریشن فارم پر کریں
+                        </button>
+                    </div>
+                `;
             }
         }
     </script>
