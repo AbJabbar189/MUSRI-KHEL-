@@ -85,11 +85,26 @@ def seed():
             db.add_all([c_central, c_khi, c_shn])
             db.flush()
 
-            # Office bearers
-            ob1 = OfficeBearer(committee_id=c_central.id, title_ur="صدر مصری خیل قومی اتحاد", title_en="President", name_ur="حاجی محمد گل خان", name_en="Haji Muhammad Gul Khan", is_public=True)
-            ob2 = OfficeBearer(committee_id=c_central.id, title_ur="جنرل سیکرٹری", title_en="General Secretary", name_ur="شیر زمان خان", name_en="Sher Zaman Khan", is_public=True)
-            ob3 = OfficeBearer(committee_id=c_khi.id, title_ur="زونل صدر کراچی", title_en="Karachi Zone President", name_ur="عبد الرحمٰن مصری خیل", name_en="Abdul Rehman Misri Khel", is_public=True)
-            db.add_all([ob1, ob2, ob3])
+            # Office bearers (Central Cabinet)
+            cabinet = [
+                ("سرپرست اعلیٰ", "Chief Patron", "عبد اللہ بھائی", "Abdullah Bhai"),
+                ("وائس چیئرمین", "Vice Chairman", "محمد ذوالقرنین", "Muhammad Zulqarnain"),
+                ("ڈپٹی چیئرمین", "Deputy Chairman", "صلاح الدین ایوبی", "Salahuddin Ayubi"),
+                ("صدر", "President", "نصیب زمین بھائی", "Naseeb Zameen Bhai"),
+                ("نائب صدر", "Vice President", "نظیر محمد بھائی", "Nazir Muhammad Bhai"),
+                ("سینئر نائب صدر", "Senior Vice President", "محمد نواب بھائی", "Muhammad Nawab Bhai"),
+                ("جوئنیر نائب صدر", "Junior Vice President", "مولانا محمد سلیمان بھائی", "Maulana Muhammad Sulaiman Bhai"),
+                ("جنرل سیکرٹری", "General Secretary", "فرید الرحمٰن", "Farid-ur-Rehman"),
+                ("نائب ڈپٹی جنرل سیکرٹری", "Naib Deputy General Secretary", "فخر البشر صاحب", "Fakhr-ul-Bashar Sahib"),
+                ("جوائنٹ سیکرٹری", "Joint Secretary", "تاج معین اللہ بھائی", "Taj Moeenullah Bhai"),
+                ("خزانچی", "Treasurer", "مولانا مطیع اللہ صاحب", "Maulana Mutee-ullah Sahib"),
+                ("سیکرٹری تنظیم", "Organizing Secretary", "محمد زمان درویش", "Muhammad Zaman Darwesh"),
+                ("سیکرٹری تعلیم", "Education Secretary", "حیات گل بھائی", "Hayat Gul Bhai"),
+                ("سیکرٹری فلاحی امور", "Welfare Secretary", "نور قیوم بھائی", "Noor Qayyum Bhai"),
+                ("آفس سیکرٹری", "Office Secretary", "عبد القوی بھائی", "Abdul Qawi Bhai")
+            ]
+            for title_ur, title_en, name_ur, name_en in cabinet:
+                db.add(OfficeBearer(committee_id=c_central.id, title_ur=title_ur, title_en=title_en, name_ur=name_ur, name_en=name_en, is_public=True))
             db.commit()
 
         # 3. Seed Sample Membership Application & Approved Member

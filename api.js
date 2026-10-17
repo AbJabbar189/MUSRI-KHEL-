@@ -197,8 +197,28 @@ const api = {
 
     // Leadership & Committees
     async getLeadership() {
-        const res = await fetch(`${API_BASE}/committees/leadership`);
-        return await res.json();
+        try {
+            const res = await fetch(`${API_BASE}/committees/leadership`);
+            if (res.ok) return await res.json();
+        } catch (e) {}
+
+        return [
+            { id: 1, title_ur: "سرپرست اعلیٰ", title_en: "Chief Patron", name_ur: "عبد اللہ بھائی", name_en: "Abdullah Bhai" },
+            { id: 2, title_ur: "وائس چیئرمین", title_en: "Vice Chairman", name_ur: "محمد ذوالقرنین", name_en: "Muhammad Zulqarnain" },
+            { id: 3, title_ur: "ڈپٹی چیئرمین", title_en: "Deputy Chairman", name_ur: "صلاح الدین ایوبی", name_en: "Salahuddin Ayubi" },
+            { id: 4, title_ur: "صدر", title_en: "President", name_ur: "نصیب زمین بھائی", name_en: "Naseeb Zameen Bhai" },
+            { id: 5, title_ur: "نائب صدر", title_en: "Vice President", name_ur: "نظیر محمد بھائی", name_en: "Nazir Muhammad Bhai" },
+            { id: 6, title_ur: "سینئر نائب صدر", title_en: "Senior Vice President", name_ur: "محمد نواب بھائی", name_en: "Muhammad Nawab Bhai" },
+            { id: 7, title_ur: "جوئنیر نائب صدر", title_en: "Junior Vice President", name_ur: "مولانا محمد سلیمان بھائی", name_en: "Maulana Muhammad Sulaiman Bhai" },
+            { id: 8, title_ur: "جنرل سیکرٹری", title_en: "General Secretary", name_ur: "فرید الرحمٰن", name_en: "Farid-ur-Rehman" },
+            { id: 9, title_ur: "نائب ڈپٹی جنرل سیکرٹری", title_en: "Naib Deputy General Secretary", name_ur: "فخر البشر صاحب", name_en: "Fakhr-ul-Bashar Sahib" },
+            { id: 10, title_ur: "جوائنٹ سیکرٹری", title_en: "Joint Secretary", name_ur: "تاج معین اللہ بھائی", name_en: "Taj Moeenullah Bhai" },
+            { id: 11, title_ur: "خزانچی", title_en: "Treasurer", name_ur: "مولانا مطیع اللہ صاحب", name_en: "Maulana Mutee-ullah Sahib" },
+            { id: 12, title_ur: "سیکرٹری تنظیم", title_en: "Organizing Secretary", name_ur: "محمد زمان درویش", name_en: "Muhammad Zaman Darwesh" },
+            { id: 13, title_ur: "سیکرٹری تعلیم", title_en: "Education Secretary", name_ur: "حیات گل بھائی", name_en: "Hayat Gul Bhai" },
+            { id: 14, title_ur: "سیکرٹری فلاحی امور", title_en: "Welfare Secretary", name_ur: "نور قیوم بھائی", name_en: "Noor Qayyum Bhai" },
+            { id: 15, title_ur: "آفس سیکرٹری", title_en: "Office Secretary", name_ur: "عبد القوی بھائی", name_en: "Abdul Qawi Bhai" }
+        ];
     },
 
     async getRegions() {
